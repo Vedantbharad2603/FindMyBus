@@ -1,204 +1,213 @@
 <?php
-    $servername = "localhost:4090";
-    $username = "root";
-    $password = "vedant2603";
-    try {
-        $conn = new PDO("mysql:host=$servername;", $username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "Connected successfully"."</br>";
-    } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage()."</br>";;
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "temp_findmybus";
+$schema="temp_findmybus";
+try {
+    $conn = new PDO("mysql:host=$servername;", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully" . "</br>";
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage() . "</br>";
+}
+try {
+    $querys = array("CREATE DATABASE IF NOT EXISTS $schema",
+                "USE $schema",
+                "DROP TABLE IF EXISTS
+                    routestops,
+                    busschedule,
+                    admin,
+                    buses,
+                    staff,
+                    depo",
+                "CREATE TABLE IF NOT EXISTS admin (
+                        Id VARCHAR(15) NOT NULL PRIMARY KEY,
+                        FirstName VARCHAR(15) NOT NULL,
+                        LastName VARCHAR(15) NOT NULL,
+                        Roll VARCHAR(15) NOT NULL,
+                        Password VARCHAR(30) NOT NULL
+                    );",
+                "CREATE TABLE IF NOT EXISTS buses (
+                        Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        BusNumber VARCHAR(50) NOT NULL,
+                        Type VARCHAR(50) NOT NULL,
+                        TotalSeats INT NOT NULL,
+                        EngineNo VARCHAR(100) NOT NULL,
+                        InsuranceNo VARCHAR(100) NOT NULL
+                    );",
+                "CREATE TABLE IF NOT EXISTS staff (
+                        Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        Type VARCHAR(20) NOT NULL,
+                        FirstName VARCHAR(20) NOT NULL,
+                        MiddleName VARCHAR(20) NOT NULL,
+                        LastName VARCHAR(20) NOT NULL,
+                        DOB DATE NOT NULL,
+                        JoiningDate DATE NOT NULL,
+                        RetirementDate DATE NOT NULL,
+                        Address1 VARCHAR(255) NOT NULL,
+                        Address2 VARCHAR(255) NOT NULL,
+                        City VARCHAR(255) NOT NULL,
+                        State VARCHAR(255) NOT NULL,
+                        PinCode VARCHAR(10) NOT NULL,
+                        AddarCardNo VARCHAR(12) NOT NULL,
+                        AddarCardURL VARCHAR(255) NOT NULL,
+                        ProfilePhotoURL VARCHAR(255) NOT NULL,
+                        LicenceNo VARCHAR(50) NOT NULL,
+                        LicenceURL VARCHAR(255) NOT NULL,
+                        WorkMobileNo VARCHAR(10) NOT NULL,
+                        HomeMobileNo VARCHAR(10) DEFAULT NULL
+                    );",
+                "CREATE TABLE IF NOT EXISTS depo (
+                        Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                        Name VARCHAR(50) NOT NULL,
+                        NoOfPlatforms INT NOT NULL,
+                        Address1 VARCHAR(255) NOT NULL,
+                        Address2 VARCHAR(255) NOT NULL,
+                        City VARCHAR(255) NOT NULL,
+                        State VARCHAR(255) NOT NULL,
+                        PinCode VARCHAR(10) NOT NULL,
+                        WorkPhoneNo VARCHAR(11) NOT NULL,
+                        SecondPhoneNo VARCHAR(11) DEFAULT NULL
+                    );",
+                "CREATE TABLE IF NOT EXISTS busschedule (
+                        TripId VARCHAR(15) NOT NULL PRIMARY KEY,
+                        Name VARCHAR(50) NOT NULL,
+                        StartLocation VARCHAR(100) NOT NULL,
+                        EndLocation VARCHAR(100) NOT NULL,
+                        DriverId INT,
+                        ConductorId INT,
+                        BusId INT,
+                        CONSTRAINT fk_bs_driverid FOREIGN KEY (DriverId) REFERENCES staff(Id),
+                        CONSTRAINT fk_bs_conductorid FOREIGN KEY (ConductorId) REFERENCES staff(Id),
+                        CONSTRAINT fk_bs_busid FOREIGN KEY (BusId) REFERENCES buses(Id)
+                    );",
+                "CREATE TABLE IF NOT EXISTS routestops (
+                        TripId VARCHAR(15),
+                        StopIndex INT NOT NULL,
+                        DepoId INT,
+                        DepoName varchar(50) NOT NULL,
+                        ArrivalTime TIME NOT NULL,
+                        DepatureTime TIME NOT NULL,
+                        CONSTRAINT fk_rs_routeid FOREIGN KEY (TripId) REFERENCES busschedule(TripId),
+                        CONSTRAINT fk_rs_depoid FOREIGN KEY (DepoId) REFERENCES depo(Id)
+                    );",
+    );
+    foreach ($querys as $query) {
+        $conn->exec($query);
     }
-    try {
-        $querys = array("CREATE DATABASE findmybus", 
-                        "CREATE TABLE findmybus.buses (
-                            BusId int NOT NULL AUTO_INCREMENT,
-                            BusNumber varchar(50) NOT NULL,
-                            BusType varchar(50) NOT NULL,
-                            TotalSeats int NOT NULL,
-                            EngineNo varchar(100) NOT NULL,
-                            InsuranceNo varchar(100) NOT NULL,
-                            PRIMARY KEY (BusId));", 
-                        "CREATE TABLE findmybus.busstop (
-                            StopId int NOT NULL,
-                            StopName varchar(50) NOT NULL,
-                            Address1 varchar(225) NOT NULL,
-                            Address2 varchar(225) NOT NULL,
-                            City varchar(225) NOT NULL,
-                            State varchar(225) NOT NULL,
-                            WorkPhoneNo varchar(11) NOT NULL,
-                            SecondPhoneNo varchar(11) DEFAULT NULL,
-                            PRIMARY KEY (StopId));",
-                            "CREATE TABLE findmybus.depo (
-                                depo_id int NOT NULL,
-                                depo_name varchar(50) NOT NULL,
-                                depo_no_of_platforms int NOT NULL,
-                                depo_add varchar(50) NOT NULL,
-                                depo_phone_1 varchar(11) NOT NULL,
-                                depo_phone_2 varchar(11) DEFAULT NULL,
-                                PRIMARY KEY (depo_id));",
-                            "CREATE TABLE findmybus.route (
-                                route_id int NOT NULL,
-                                route_name varchar(50) NOT NULL,
-                                route_start_location varchar(100) NOT NULL,
-                                route_end_location varchar(100) NOT NULL,
-                                PRIMARY KEY (route_id));",
-                            "CREATE TABLE findmybus.staff (
-                                StaffId int NOT NULL,
-                                StaffType varchar(20) NOT NULL,
-                                FirstName varchar(20) NOT NULL,
-                                LastName varchar(20) NOT NULL,
-                                DOB date NOT NULL,
-                                JoiningDate date NOT NULL,
-                                RetirementDate date NOT NULL,
-                                Address1 varchar(255) NOT NULL,
-                                Address2 varchar(255) NOT NULL,
-                                City varchar(255) NOT NULL,
-                                State varchar(255) NOT NULL,
-                                PinCode varchar(10) NOT NULL,
-                                AddarCardNo varchar(12) NOT NULL,
-                                AddarCardURL varchar(255) NOT NULL,
-                                ProfilePhotoURL varchar(255) NOT NULL,
-                                LicenceNo varchar(50) NOT NULL,
-                                LicenceURL varchar(255) NOT NULL,
-                                WorkPhoneNo varchar(11) NOT NULL,
-                                HomePhoneNo varchar(11) DEFAULT NULL,
-                                PRIMARY KEY (StaffId));",
-                                "CREATE TABLE findmybus.busschedule (
-                                    trip_id varchar(10) NOT NULL,
-                                    route_id int NOT NULL,
-                                    driver_id int NOT NULL,
-                                    conductor_id int NOT NULL,
-                                    bus_id int NOT NULL,
-                                    PRIMARY KEY (trip_id),
-                                    KEY route_id (route_id),
-                                    KEY driver_id (driver_id),
-                                    KEY conductor_id (conductor_id),
-                                    CONSTRAINT busschedule_ibfk_1 FOREIGN KEY (route_id) REFERENCES route (route_id),
-                                    CONSTRAINT busschedule_ibfk_2 FOREIGN KEY (driver_id) REFERENCES staff (StaffId),
-                                    CONSTRAINT busschedule_ibfk_3 FOREIGN KEY (conductor_id) REFERENCES staff (StaffId),
-                                    CONSTRAINT busschedule_ibfk_4 FOREIGN KEY (conductor_id) REFERENCES buses (BusId));",
-                                "CREATE TABLE findmybus.adminuser (
-                                    admin_id varchar(6) NOT NULL,
-                                    pass int NOT NULL,
-                                    PRIMARY KEY (admin_id));"
-                    );
-        foreach ($querys as $query) {
-            $conn->exec($query);
-        }
-        echo "Database AND table created successfully"."</br>";
-        $querys = array("INSERT INTO findmybus.buses (BusNumber, BusType, TotalSeats, EngineNo, InsuranceNo)
-                        VALUES
-                        ('ABC-123', 'Sleeper', 40, 'ENG123', 'INS123'),
-                        ('DEF-456', 'Seater', 30, 'ENG456', 'INS456'),
-                        ('GHI-789', 'Sleeper', 40, 'ENG789', 'INS789'),
-                        ('JKL-012', 'Seater', 30, 'ENG012', 'INS012'),
-                        ('MNO-345', 'Sleeper', 40, 'ENG345', 'INS345'),
-                        ('PQR-678', 'Seater', 30, 'ENG678', 'INS678'),
-                        ('STU-901', 'Sleeper', 40, 'ENG901', 'INS901'),
-                        ('VWX-234', 'Seater', 30, 'ENG234', 'INS234'),
-                        ('YZA-567', 'Sleeper', 40, 'ENG567', 'INS567'),
-                        ('BCD-890', 'Seater', 30, 'ENG890', 'INS890'),
-                        ('EFG-123', 'Sleeper', 40, 'ENG123', 'INS123'),
-                        ('HIJ-456', 'Seater', 30, 'ENG456', 'INS456'),
-                        ('KLM-789', 'Sleeper', 40, 'ENG789', 'INS789'),
-                        ('NOP-012', 'Seater', 30, 'ENG012', 'INS012'),
-                        ('QRS-345', 'Sleeper', 40, 'ENG345', 'INS345'),
-                        ('TUV-678', 'Seater', 30, 'ENG678', 'INS678'),
-                        ('WXY-901', 'Sleeper', 40, 'ENG901', 'INS901'),
-                        ('ZAB-234', 'Seater', 30, 'ENG234', 'INS234'),
-                        ('CDE-567', 'Sleeper', 40, 'ENG567', 'INS567'),
-                        ('FGH-890', 'Seater', 30, 'ENG890', 'INS890');",
-                        "INSERT INTO findmybus.busstop (StopId, StopName, Address1, Address2, City, State, WorkPhoneNo, SecondPhoneNo)
-                        VALUES
-                        (1, 'Ahmedabad Central Bus Station', 'Geeta Mandir Road', 'Geeta Mandir', 'Ahmedabad', 'Gujarat', '25546 04342', ''),
-                        (2, 'Baroda Central Bus Station', 'Kashivishwanath Temple Road', 'Pratapnagar', 'Vadodara', 'Gujarat', '52279 22540', ''),
-                        (3, 'Bhavnagar Bus Station', 'Shravan Road', 'Bhavnagar', 'Bhavnagar', 'Gujarat', '82453 28348', ''),
-                        (4, 'Gandhidham Bus Station', 'Station Road', 'Gandhidham', 'Kutch', 'Gujarat', '62216 44631', ''),
-                        (5, 'Gandhinagar Bus Station', 'Swaminarayan Marg', 'Sector 11', 'Gandhinagar', 'Gujarat', '24322 52500', ''),
-                        (6, 'Jamnagar Bus Station', 'Pandit Nehru Marg', 'Digvijay Plot', 'Jamnagar', 'Gujarat', '25445 02311', ''),
-                        (7, 'Junagadh Bus Station', 'Shiuli Road', 'Junagadh', 'Junagadh', 'Gujarat', '28624 36355', ''),
-                        (8, 'Mehsana Bus Station', 'Ambika Nagar', 'Mehsana', 'Mehsana', 'Gujarat', '24554 8000', ''),
-                        (9, 'Navsari Bus Station', 'Station Road', 'Navsari', 'Navsari', 'Gujarat', '92549 57601', ''),
-                        (10, 'Porbandar Bus Station', 'S T Road', 'Porbandar', 'Porbandar', 'Gujarat', '22224 22124', ''),
-                        (11, 'Rajkot Central Bus Station', 'Gondal Road', 'Rajkot', 'Rajkot', 'Gujarat', '82385 04285', ''),
-                        (12, 'Surat Central Bus Station', 'Varachha Road', 'Surat', 'Surat', 'Gujarat', '32939 84874', ''),
-                        (13, 'Surendranagar Bus Station', 'M.G. Road', 'Surendranagar', 'Surendranagar', 'Gujarat', '22724 37227', ''),
-                        (14, 'Vadnagar Bus Station', 'Modhera Road', 'Vadnagar', 'Mehsana', 'Gujarat', '22313 23012', ''),
-                        (15, 'Valsad Bus Station', 'Nanakwada Road', 'Valsad', 'Valsad', 'Gujarat', '29253 18025', '');",
-                        "INSERT INTO findmybus.depo (depo_id, depo_name, depo_no_of_platforms, depo_add, depo_phone_1, depo_phone_2)
-                        VALUES
-                        (1, 'Ahmedabad Bus Depo', 4, 'Gheekanta, Ahmedabad, Gujarat', '25506 54477', NULL),
-                        (2, 'Surat Bus Depo', 6, 'Udhana Darwaja, Surat, Gujarat', '82612 42224', '92612 22285'),
-                        (3, 'Vadodara Bus Depo', 5, 'Central Bus Station, Vadodara, Gujarat', '42652 72285', NULL),
-                        (4, 'Rajkot Bus Depo', 3, 'Gondal Road, Rajkot, Gujarat', '28123 86155', '42812 38195'),
-                        (5, 'Bhavnagar Bus Depo', 2, 'Kalanala, Bhavnagar, Gujarat', '27824 24378', NULL),
-                        (6, 'Jamnagar Bus Depo', 3, 'Bedi Road, Jamnagar, Gujarat', '28827 50303', NULL),
-                        (7, 'Junagadh Bus Depo', 2, 'Sardar Baug, Junagadh, Gujarat', '28526 24256', '28526 23456'),
-                        (8, 'Anand Bus Depo', 2, 'Borsad Chokdi, Anand, Gujarat', '26922 46038', NULL),
-                        (9, 'Porbandar Bus Depo', 2, 'Porbandar, Gujarat', '28622 41266', NULL),
-                        (10, 'Navsari Bus Depo', 3, 'Navsari, Gujarat', '26372 50240', '26372 58611'),
-                        (11, 'Mehsana Bus Depo', 3, 'Bhandu, Mehsana, Gujarat', '27622 59877', NULL),
-                        (12, 'Bhuj Bus Depo', 2, 'Bhuj, Kutch, Gujarat', '28322 50065', NULL),
-                        (13, 'Anjar Bus Depo', 2, 'Anjar, Kutch, Gujarat', '28364 21433', NULL),
-                        (14, 'Amreli Bus Depo', 2, 'Amreli, Gujarat', '27922 23333', NULL),
-                        (15, 'Botad Bus Depo', 1, 'Botad, Gujarat', '28492 41048', NULL),
-                        (16, 'Dahod Bus Depo', 2, 'Dahod, Gujarat', '26732 20397', '26732 20292'),
-                        (17, 'Godhra Bus Depo', 2, 'Godhra, Gujarat', '26722 42413', '26722 42202'),
-                        (18, 'Nadiad Bus Depo', 3, 'Nadiad, Gujarat', '2682 563300', NULL),
-                        (19, 'Morbi Bus Depo', 2, 'Morbi, Gujarat', '28222 31500', NULL),
-                        (20, 'Surendranagar Bus Depo', 2, 'Surendranagar, Gujarat', '27522 32424', '27522 31256');",
-                        "INSERT INTO findmybus.route (route_id, route_name, route_start_location, route_end_location)
-                        VALUES 
-                        (1, 'Ahmedabad-Mehsana Expressway', 'Ahmedabad', 'Mehsana'),
-                        (2, 'Surat-Baroda Highway', 'Surat', 'Vadodara'),
-                        (3, 'Rajkot-Jamnagar Highway', 'Rajkot', 'Jamnagar'),
-                        (4, 'Gujarat State Highway 68', 'Palanpur', 'Deesa'),
-                        (5, 'Ahmedabad-Rajkot Highway', 'Ahmedabad', 'Rajkot'),
-                        (6, 'Gujarat State Highway 41', 'Vadodara', 'Halol'),
-                        (7, 'Gujarat State Highway 151', 'Surat', 'Bardoli'),
-                        (8, 'Gujarat State Highway 6', 'Navsari', 'Vansda'),
-                        (9, 'Gujarat State Highway 141', 'Palitana', 'Amreli'),
-                        (10, 'Gujarat State Highway 25', 'Bhuj', 'Mandvi'),
-                        (11, 'Gujarat State Highway 20', 'Anand', 'Petlad'),
-                        (12, 'Gujarat State Highway 40', 'Bhavnagar', 'Talaja'),
-                        (13, 'Gujarat State Highway 72', 'Valsad', 'Dharampur'),
-                        (14, 'Gujarat State Highway 10', 'Junagadh', 'Somanath'),
-                        (15, 'Gujarat State Highway 33', 'Himmatnagar', 'Modasa'),
-                        (16, 'Gujarat State Highway 12', 'Godhra', 'Halol'),
-                        (17, 'Gujarat State Highway 64', 'Surendranagar', 'Dhrangadhra'),
-                        (18, 'Gujarat State Highway 13', 'Amreli', 'Savarkundla'),
-                        (19, 'Gujarat State Highway 5', 'Porbandar', 'Dwarka'),
-                        (20, 'Gujarat State Highway 163', 'Bharuch', 'Ankleshwar');",
-                        "INSERT INTO findmybus.staff (StaffId, StaffType, FirstName, LastName, DOB, JoiningDate, RetirementDate, Address1, Address2, City, State, PinCode, AddarCardNo, AddarCardURL, ProfilePhotoURL, LicenceNo, LicenceURL, WorkPhoneNo, HomePhoneNo) 
-                        VALUES
-                        (1, 'driver', 'Amit', 'Shah', '1985-06-02', '2010-05-01', '2055-05-01', '123 Main St', 'Apt 1', 'Ahmedabad', 'Gujarat', '380001', '123456789012', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL1234567', 'staffdata/licenses/license.jpg', '9876543210', '1234567890'),
-                        (2, 'conductor', 'Pooja', 'Patel', '1990-09-12', '2015-03-15', '2065-03-15', '456 Elm St', '', 'Surat', 'Gujarat', '395001', '234567890123', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL2345678', 'staffdata/licenses/license.jpg', '9876543211', NULL),
-                        (3, 'driver', 'Rajesh', 'Yadav', '1988-01-17', '2011-08-01', '2056-08-01', '789 Oak St', 'Apt 2', 'Vadodara', 'Gujarat', '390001', '345678901234', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL3456789', 'staffdata/licenses/license.jpg', '9876543212', '1234567891'),
-                        (4, 'conductor', 'Neha', 'Sharma', '1995-11-30', '2016-12-01', '2066-12-01', '1010 Pine St', '', 'Rajkot', 'Gujarat', '360001', '456789012345', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL4567890', 'staffdata/licenses/license.jpg', '9876543213', NULL),
-                        (5, 'driver', 'Sanjay', 'Gupta', '1986-03-05', '2012-10-01', '2057-10-01', '111 Main St', 'Apt 3', 'Surat', 'Gujarat', '395001', '567890123456', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL5678901', 'staffdata/licenses/license.jpg', '9876543214', '1234567892'),
-                        (6, 'conductor', 'Aarav', 'Patel', '1990-05-12', '2015-01-01', '2050-12-31', '123 Main St', 'Apt 1', 'Ahmedabad', 'Gujarat', '380001', '123456789012', 'staffdata/aadharCardImg/aadhaar1.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL1234', 'staffdata/licenses/license.jpg', '9876543210', '1234567890'),
-                        (7, 'driver', 'Aryan', 'Shah', '1992-07-18', '2016-02-01', '2051-01-31', '456 Elm St', 'Unit 2', 'Surat', 'Gujarat', '395007', '234567890123', 'staffdata/aadharCardImg/aadhaar2.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL2345', 'staffdata/licenses/license.jpg', '9876543211', '1234567891'),
-                        (8, 'conductor', 'Ishaan', 'Pandey', '1985-09-20', '2009-01-01', '2044-12-31', '789 Oak St', 'Suite 3', 'Vadodara', 'Gujarat', '390001', '345678901234', 'staffdata/aadharCardImg/aadhaar3.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL3456', 'staffdata/licenses/license.jpg', '9876543212', '1234567892'),
-                        (9, 'driver', 'Kabir', 'Desai', '1987-11-15', '2013-05-01', '2048-04-30', '1010 Pine St', 'Floor 4', 'Rajkot', 'Gujarat', '360001', '456789012345', 'staffdata/aadharCardImg/aadhaar4.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL4567', 'staffdata/licenses/license.jpg', '9876543213', '1234567893'),
-                        (10, 'conductor', 'Rohan', 'Gupta', '1989-01-25', '2014-07-01', '2049-06-30', '111 Maple St', 'Suite 5', 'Jamnagar', 'Gujarat', '361001', '567890123456', 'staffdata/aadharCardImg/aadhaar5.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL5678', 'staffdata/licenses/license.jpg', '9876543214', '1234567894'),
-                        (11, 'driver', 'Rajesh', 'Patel', '1990-01-01', '2015-01-01', '2050-01-01', '123 Main St', 'Apt 1', 'Ahmedabad', 'Gujarat', '380001', '123456789012', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL123456', 'staffdata/licenses/license.jpg', '9876543210', NULL),
-                        (12, 'conductor', 'Amit', 'Shah', '1995-03-15', '2017-06-01', '2052-06-01', '456 Park Ave', 'Suite 2B', 'Surat', 'Gujarat', '395001', '234567890123', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL234567', 'staffdata/licenses/license.jpg', '9876543211', NULL),
-                        (13, 'driver', 'Suresh', 'Nair', '1988-05-22', '2014-03-15', '2049-03-15', '789 Elm St', '', 'Vadodara', 'Gujarat', '390001', '345678901234', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL345678', 'staffdata/licenses/license.jpg', '9876543212', '9876543213'),
-                        (14, 'conductor', 'Priya', 'Rao', '1993-08-10', '2016-07-01', '2051-07-01', '567 1st St', '', 'Rajkot', 'Gujarat', '360001', '456789012345', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL456789', 'staffdata/licenses/license.jpg', '9876543214', '9876543215'),
-                        (15, 'driver', 'Manoj', 'Sharma', '1985-11-12', '2013-05-01', '2048-05-01', '234 5th Ave', 'Floor 4', 'Bhavnagar', 'Gujarat', '364001', '567890123456', 'staffdata/aadharCardImg/aadhar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL567890', 'staffdata/licenses/license.jpg', '9876543216', NULL),
-                        (16, 'conductor', 'Aarav', 'Patel', '1990-01-01', '2010-01-01', '2050-01-01', '123 Main St', '', 'Ahmedabad', 'Gujarat', '380001', '123456789012', 'staffdata/aadharCardImg/aadhaar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL123456', 'staffdata/licenses/license.jpg', '9876543210', ''),
-                        (17, 'driver', 'Aryan', 'Shah', '1992-05-22', '2012-01-01', '2057-01-01', '456 Park Ave', '', 'Surat', 'Gujarat', '395001', '234567890123', 'staffdata/aadharCardImg/aadhaar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL234567', 'staffdata/licenses/license.jpg', '8765432109', ''),
-                        (18, 'conductor', 'Aniket', 'Mehta', '1995-07-15', '2015-01-01', '2060-01-01', '789 Elm St', '', 'Vadodara', 'Gujarat', '390001', '345678901234', 'staffdata/aadharCardImg/aadhaar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL345678', 'staffdata/licenses/license.jpg', '7654321098', ''),
-                        (19, 'driver', 'Arjun', 'Desai', '1998-03-11', '2018-01-01', '2063-01-01', '321 Oak St', '', 'Rajkot', 'Gujarat', '360001', '456789012345', 'staffdata/aadharCardImg/aadhaar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL456789', 'staffdata/licenses/license.jpg', '6543210987', ''),
-                        (20, 'conductor', 'Rohan', 'Gupta', '1991-11-30', '2009-01-01', '2049-01-01', '654 Pine St', '', 'Jamnagar', 'Gujarat', '361001', '567890123456', 'staffdata/aadharCardImg/aadhaar.jpg', 'staffdata/prifilePhotos/photo.jpg', 'DL567890', 'staffdata/licenses/license.jpg', '5432109876', '');",
-                        );
-        foreach ($querys as $query) {
-            $conn->exec($query);
-        }
-        echo "DATA Added successfully"."</br>";
-    } 
-    catch(PDOException $e) {
-        echo $query . "<br>" . $e->getMessage()."</br>";
+    echo "Database AND table created successfully" . "</br>";
+    $querys = array("INSERT INTO `buses` (`BusNumber`, `Type`, `TotalSeats`, `EngineNo`, `InsuranceNo`)
+                    VALUES 
+                        ('ABC123', 'Sleeper', 40, '123456', 'INS123'),
+                        ('DEF456', 'Seater', 30, '789012', 'INS456'),
+                        ('GHI789', 'Sleeper', 40, '345678', 'INS789'),
+                        ('JKL012', 'Seater', 30, '901234', 'INS012'),
+                        ('MNO345', 'Sleeper', 40, '567890', 'INS345'),
+                        ('PQR678', 'Seater', 30, '123789', 'INS678'),
+                        ('STU901', 'Sleeper', 40, '890123', 'INS901'),
+                        ('VWX234', 'Seater', 30, '456789', 'INS234'),
+                        ('YZA567', 'Sleeper', 40, '012345', 'INS567'),
+                        ('BCD890', 'Seater', 30, '678901', 'INS890'),
+                        ('EFG123', 'Sleeper', 40, '234567', 'INS123'),
+                        ('HIJ456', 'Seater', 30, '890123', 'INS456'),
+                        ('KLM789', 'Sleeper', 40, '456789', 'INS789'),
+                        ('NOP012', 'Seater', 30, '012345', 'INS012'),
+                        ('QRS345', 'Sleeper', 40, '678901', 'INS345');",
+                    "INSERT INTO staff (Type, FirstName, MiddleName, LastName, DOB, JoiningDate, RetirementDate, Address1, Address2, City, State, PinCode, AddarCardNo, AddarCardURL, ProfilePhotoURL, LicenceNo, LicenceURL, WorkMobileNo, HomeMobileNo)
+                    VALUES 
+                    -- //TODO phonenumber not be same AND no any female drivers 
+                        ('driver', 'Amit', 'Kumar', 'Sharma', '1992-05-23', '2020-02-01', '2055-02-01', 'Sarkhej-Gandhinagar Highway', 'Opp. Rajpath Club', 'Ahmedabad', 'Gujarat', '380015', '111111111111', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-01 2015010123456', '../staffdata/Licence/licencePhoto.jpg', '9876543210', NULL),
+                        ('conductor', 'Sneha', 'R', 'Patel', '1996-11-04', '2021-03-15', '2056-03-15', 'Near RTO Office', 'Fatehpura', 'Vadodara', 'Gujarat', '390006', '222222222222', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-06 2017010123456', '../staffdata/Licence/licencePhoto.jpg', '9876543211', '9825678643'),
+                        ('driver', 'Vijay', 'K', 'Mehta', '1988-08-12', '2019-12-01', '2054-12-01', 'Karanj', 'Opp. Bharat Petroleum Pump', 'Bharuch', 'Gujarat', '392001', '333333333333', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-16 2014010123456', '../staffdata/Licence/licencePhoto.jpg', '9876543212', NULL),
+                        ('conductor', 'Nilesh', 'V', 'Shah', '1994-03-10', '2020-05-01', '2055-05-01', 'Rajkot-Jamnagar Highway', 'Opp. Morbi Road', 'Rajkot', 'Gujarat', '360005', '444444444444', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-03 2016010123456', '../staffdata/Licence/licencePhoto.jpg', '9876543213', NULL),
+                        ('driver', 'Nitin', 'Kumar', 'Patel', '1985-09-17', '2010-01-01', '2055-09-17', 'Dabhoi Road', 'Shivaji Chowk', 'Vadodara', 'Gujarat', '390019', '555555555555', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'DL-2010-00001', '../staffdata/Licence/licencePhoto.jpg', '9876543210',NULL),
+                        ('conductor', 'Kiran', 'M', 'Patel', '1985-05-23', '2010-07-01', '2055-07-01', '45, Shivam Society', 'Near Bhaktinagar Circle', 'Rajkot', 'Gujarat', '360002', '666666666666', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-03 123456', '../staffdata/Licence/licencePhoto.jpg', '9876543210', '9876543210'),
+                        ('driver', 'Hiral', 'N', 'Shah', '1990-02-11', '2013-04-01', '2058-04-01', '101, Ambika Park', 'Near Mahavir Hall', 'Surat', 'Gujarat', '395006', '777777777777', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-05 789012', '../staffdata/Licence/licencePhoto.jpg', '9876543211', NULL),
+                        ('conductor', 'Vishal', 'B', 'Desai', '1988-08-10', '2012-01-01', '2047-01-01', '302, Triveni Flats', 'Near Sardar Patel Ring Road', 'Ahmedabad', 'Gujarat', '380015', '888888888888', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-01 456789', '../staffdata/licence/licencephoto.jpg', '9876543212', '9876543212'),
+                        ('driver', 'Neha', 'K', 'Thakkar', '1995-04-03', '2018-05-01', '2063-05-01', '16, Jeevandeep Society', 'Near Bhulka Bhavan School', 'Vadodara', 'Gujarat', '390007', '999999999999', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-06 234567', '../staffdata/licence/licencephoto.jpg', '9876543213', '9876543213'),
+                        ('conductor', 'Rajesh', 'D', 'Chaudhary', '1986-11-20', '2011-09-01', '2056-09-01', '39, Siddhraj Nagar', 'Near RTO Circle', 'Gandhinagar', 'Gujarat', '382007', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ-18 345678', '../staffdata/licence/licencephoto.jpg', '9876543214', '9876543214'),
+                        ('driver', 'Rahul', 'Kumar', 'Sharma', '1995-05-10', '2020-02-01', '2045-05-10', '145, Vasant Vihar Society', 'Nana Varachha', 'Surat', 'Gujarat', '395006', '987654321012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ01234567', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('conductor', 'Amit', 'Rajesh', 'Patel', '1992-01-25', '2015-06-01', '2042-01-25', '3, Sardar Park Society', 'Adajan', 'Surat', 'Gujarat', '395009', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ12345678', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('driver', 'Neha', 'Vijay', 'Gupta', '1990-12-15', '2018-01-01', '2043-12-15', '11, Shivdarshan Society', 'Katargam', 'Surat', 'Gujarat', '395004', '456789012345', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ23456789', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('conductor', 'Sneha', 'Amit', 'Mehta', '1998-07-22', '2021-01-01', '2046-07-22', '202, Rajhans Society', 'Adajan', 'Surat', 'Gujarat', '395009', '789012345678', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ34567890', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('driver', 'Rajesh', 'Nilesh', 'Shah', '1993-03-05', '2017-06-01', '2043-03-05', '401, Sarthi Apartment', 'Katargam', 'Surat', 'Gujarat', '395004', '901234567890', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ45678901', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('conductor', 'Rajesh', 'Kumar', 'Patel', '1985-05-10', '2015-04-01', '2045-04-01', '123 Main Street', 'Gujarat', 'Ahmedabad', 'Gujarat', '380001', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'ABCD123456', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('driver', 'Anjali', 'Dev', 'Shah', '1990-07-15', '2017-03-12', '2047-03-12', '456 2nd Street', 'Gujarat', 'Surat', 'Gujarat', '395007', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'EFGH456789', '../staffdata/licence/licencephoto.jpg', '9876543211', NULL),
+                        ('conductor', 'Amit', 'Kumar', 'Jain', '1988-03-21', '2018-06-01', '2048-06-01', '789 3rd Street', 'Gujarat', 'Rajkot', 'Gujarat', '360005', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'IJKL123456', '../staffdata/licence/licencephoto.jpg', '9876543212', NULL),
+                        ('driver', 'Mukesh', 'Singh', 'Parmar', '1992-12-28', '2016-02-15', '2046-02-15', '101 4th Street', 'Gujarat', 'Vadodara', 'Gujarat', '390001', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'MNOP456789', '../staffdata/licence/licencephoto.jpg', '9876543213', NULL),
+                        ('conductor', 'Suresh', 'Babu', 'Desai', '1984-11-01', '2014-07-01', '2044-07-01', '234 5th Street', 'Gujarat', 'Surat', 'Gujarat', '395009', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'QRST123456', '../staffdata/licence/licencephoto.jpg', '9876543214', NULL),
+                        ('driver', 'Rajesh', 'Kumar', 'Patel', '1990-01-01', '2020-01-01', '2050-01-01', '456 Street Road', 'Gujarat', 'Surat', 'Gujarat', '395001', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'ABCD123456', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('conductor', 'Priya', 'Singh', 'Shah', '1995-02-01', '2021-01-01', '2051-01-01', '789 Lane Avenue', 'Gujarat', 'Vadodara', 'Gujarat', '390001', '234567890123', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'EFGH123456', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('driver', 'Suresh', 'Chandra', 'Joshi', '1992-03-01', '2019-01-01', '2049-01-01', '1111 Main Street', 'Gujarat', 'Rajkot', 'Gujarat', '360001', '345678901234', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'IJKL123456', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('conductor', 'Deepak', 'Mohan', 'Desai', '1988-04-01', '2022-01-01', '2052-01-01', '2222 First Street', 'Gujarat', 'Jamnagar', 'Gujarat', '361001', '456789012345', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'MNOP123456', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('driver', 'Amit', 'Kumar', 'Sharma', '1991-05-01', '2020-01-01', '2050-01-01', '3333 Second Street', 'Gujarat', 'Ahmedabad', 'Gujarat', '380001', '567890123456', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'QRST123456', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('conductor', 'Anjali', 'Rajesh', 'Shah', '1990-01-01', '2020-01-01', '2050-01-01', '1st Floor, Abhinav Tower', 'Nr. Shivam Hospital', 'Surat', 'Gujarat', '395009', '123456789012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ0123456789', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('driver','Akash', 'Kumar', 'Patel', '1995-03-15', '2018-01-01', '2048-01-01', 'B-102, Shruti Villa', 'Behind Krishna Park', 'Ahmedabad', 'Gujarat', '380051', '234567890123', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ0123456789', '../staffdata/licence/licencephoto.jpg', '9876543211', NULL),
+                        ('conductor', 'Rahul', 'Bharat', 'Desai', '1985-05-12', '2015-01-01', '2045-01-01', 'Block No. 17, Gulab Society', 'Near D Mart', 'Vadodara', 'Gujarat', '390007', '345678901234', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ0123456789', '../staffdata/licence/licencephoto.jpg', '9876543212', NULL),
+                        ('driver', 'Deepika', 'Nilesh', 'Mehta', '1992-11-23', '2019-01-01', '2049-01-01', 'A-203, Anand Tower', 'Near Bhagwati Nagar', 'Rajkot', 'Gujarat', '360002', '456789012345', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ0123456789', '../staffdata/licence/licencephoto.jpg', '9876543213', NULL),
+                        ('conductor', 'Neha', 'Amit', 'Joshi', '1991-07-19', '2017-01-01', '2047-01-01', 'C-4, Rajdeep Society', 'Near Vishalnagar', 'Bhavnagar', 'Gujarat', '364001', '567890123456', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ0123456789', '../staffdata/licence/licencephoto.jpg', '9876543214', NULL),
+                        ;",
+                    "INSERT INTO depo (Name, NoOfPlatforms, Address1, Address2, City, State, PinCode, WorkPhoneNo, SecondPhoneNo)
+                    VALUES 
+                        ('Ahmedabad Bus Depot', 10, 'Gheekanta Road', 'Near Kalupur Railway Station', 'Ahmedabad', 'Gujarat', '380002', '079-25461234', '079-25462345'),
+                        ('Surat Bus Depot', 8, 'Ring Road', 'Near Udhna Darwaja', 'Surat', 'Gujarat', '395002', '0261-2546123', '0261-2546234'),
+                        ('Vadodara Bus Depot', 12, 'Genda Circle', 'Near Lal Baug', 'Vadodara', 'Gujarat', '390005', '0265-2546123', '0265-2546234'),
+                        ('Rajkot Bus Depot', 6, 'Gondal Road', 'Near Madhapar Chowkadi', 'Rajkot', 'Gujarat', '360006', '0281-2546123', NULL),
+                        ('Bhavnagar Bus Depot', 4, 'Station Road', 'Near Jubilee Circle', 'Bhavnagar', 'Gujarat', '364001', '0278-2546123', NULL),
+                        ('Gandhinagar Bus Depot', 3, 'Infocity Road', 'Near GH-5 Circle', 'Gandhinagar', 'Gujarat', '382009', '079-2546123', '079-2546234'),
+                        ('Jamnagar Bus Depot', 5, 'Bedi Road', 'Near Gokul Nagar', 'Jamnagar', 'Gujarat', '361008', '0288-2546123', '0288-2546234'),
+                        ('Junagadh Bus Depot', 2, 'Bilkha Road', 'Near Girnar Taleti', 'Junagadh', 'Gujarat', '362001', '0285-2546123', NULL),
+                        ('Mehsana Bus Depot', 7, 'Modhera Road', 'Near Ganpat University', 'Mehsana', 'Gujarat', '384002', '02762-254612', '02762-254623'),
+                        ('Bharuch Bus Depot', 4, 'NH-8', 'Near GNFC Township', 'Bharuch', 'Gujarat', '392015', '02642-254612', NULL);",
+                    "INSERT INTO busschedule (TripId, Name, StartLocation, EndLocation, DriverId, ConductorId, BusId) 
+                    VALUES 
+                        ('TRP001', 'Ahmedabad and Surat', 'Ahmedabad', 'Surat', 1, 2, 1),
+                        ('TRP002', 'Vadodara and Rajkot', 'Vadodara', 'Rajkot', 3, 4, 2),
+                        ('TRP003', 'Bhavnagar and Gandhinagar', 'Bhavnagar', 'Gandhinagar', 5, 6, 3),
+                        ('TRP004', 'Jamnagar and Junagadh', 'Jamnagar', 'Junagadh', 7, 8, 4),
+                        ('TRP005', 'Mehsana and Bharuch', 'Mehsana', 'Bharuch', 9, 10, 5),
+                        ('TRP006', 'Surat and Rajkot', 'Surat', 'Rajkot', 11, 12, 6),
+                        ('TRP007', 'Ahmedabad and Vadodara', 'Ahmedabad', 'Vadodara', 13, 14, 7),
+                        ('TRP008', 'Bhavnagar and Mehsana', 'Bhavnagar', 'Mehsana', 15, 16, 8),
+                        ('TRP009', 'Jamnagar and Gandhinagar', 'Jamnagar', 'Gandhinagar', 17, 18, 9),
+                        ('TRP010', 'Junagadh and Bharuch', 'Junagadh', 'Bharuch', 19, 20, 10),
+                        ('TRP011', 'Ahmedabad and Rajkot', 'Ahmedabad', 'Rajkot', 21, 22, 11),
+                        ('TRP012', 'Surat and Vadodara', 'Surat', 'Vadodara', 23, 24, 12),
+                        ('TRP013', 'Bhavnagar and Jamnagar', 'Bhavnagar', 'Jamnagar', 25, 26, 13),
+                        ('TRP014', 'Gandhinagar and Bharuch', 'Gandhinagar', 'Bharuch', 27, 28, 14),
+                        ('TRP015', 'Mehsana and Junagadh', 'Mehsana', 'Junagadh', 29, 30, 15),
+                        ('TRP016', 'Vadodara and Jamnagar', 'Vadodara', 'Jamnagar', 31, 32, 16),
+                        ('TRP017', 'Surat and Bhavnagar', 'Surat', 'Bhavnagar', 33, 34, 17),
+                        ('TRP018', 'Ahmedabad and Bharuch', 'Ahmedabad', 'Bharuch', 35, 36, 18),
+                        ('TRP019', 'Rajkot and Gandhinagar', 'Rajkot', 'Gandhinagar', 37, 38, 19),
+                        ('TRP020', 'Vadodara and Bhavnagar', 'Vadodara', 'Bhavnagar', 39, 40, 20),
+                        -- return
+                        ('TRP101', 'Surat and Ahmedabad', 'Surat', 'Ahmedabad', 1, 2, 1),
+                        ('TRP102', 'Rajkot and Vadodara', 'Rajkot', 'Vadodara', 3, 4, 2),
+                        ('TRP103', 'Gandhinagar and Bhavnagar', 'Gandhinagar', 'Bhavnagar', 5, 6, 3),
+                        ('TRP104', 'Junagadh and Jamnagar', 'Junagadh', 'Jamnagar', 7, 8, 4),
+                        ('TRP105', 'Bharuch and Mehsana', 'Bharuch', 'Mehsana', 9, 10, 5),
+                        ('TRP106', 'Rajkot and Surat', 'Rajkot', 'Surat', 11, 12, 6),
+                        ('TRP107', 'Vadodara and Ahmedabad', 'Vadodara', 'Ahmedabad', 13, 14, 7),
+                        ('TRP108', 'Mehsana and Bhavnagar', 'Mehsana', 'Bhavnagar', 15, 16, 8),
+                        ('TRP109', 'Gandhinagar and Jamnagar', 'Gandhinagar', 'Jamnagar', 17, 18, 9),
+                        ('TRP110', 'Bharuch and Junagadh', 'Bharuch', 'Junagadh', 19, 20, 10),
+                        ('TRP111', 'Rajkot and Ahmedabad', 'Rajkot', 'Ahmedabad', 21, 22, 11),
+                        ('TRP112', 'Vadodara and Surat', 'Vadodara', 'Surat', 23, 24, 12),
+                        ('TRP113', 'Jamnagar and Bhavnagar', 'Jamnagar', 'Bhavnagar', 25, 26, 13),
+                        ('TRP114', 'Bharuch and Gandhinagar', 'Bharuch', 'Gandhinagar', 27, 28, 14),
+                        ('TRP115', 'Junagadh and Mehsana', 'Junagadh', 'Mehsana', 29, 30, 15),
+                        ('TRP116', 'Jamnagar and Vadodara', 'Jamnagar', 'Vadodara', 31, 32, 16),
+                        ('TRP117', 'Bhavnagar and Surat', 'Bhavnagar', 'Surat', 33, 34, 17),
+                        ('TRP118', 'Bharuch and Ahmedabad', 'Bharuch', 'Ahmedabad', 35, 36, 18),
+                        ('TRP119', 'Gandhinagar and Rajkot', 'Gandhinagar', 'Rajkot', 37, 38, 19),
+                        ('TRP120', 'Bhavnagar and Vadodara', 'Bhavnagar', 'Vadodara', 39, 40, 20);");
+    foreach ($querys as $query) {
+        $conn->exec($query);
     }
+    echo "DATA Added successfully" . "</br>";
+} catch (PDOException $e) {
+    echo $query . "<br>" . $e->getMessage() . "</br>";
+}
 ?>
