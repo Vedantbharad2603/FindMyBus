@@ -23,31 +23,21 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!(empty($_POST["id"]) && empty($_POST["password"]))) {
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "findmybus";
-            $conn = new mysqli($servername, $username, $password, $dbname);
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            } else {
-                $id = $_POST['id'];
-                $password = $_POST['password'];
-                $query = "SELECT * FROM admin WHERE Id = '$id'";
-                $result = $mysqli->query($query);
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $hashed_password = $row['Password'];
-                    if (password_verify($password, $hashed_password)) {
-                        header("Location: homepage.php");
-                    } else {
-                        header("Location: index.php");
-                    }
+            include_once "../includeFiles/connections.php";
+            $id = $_POST['id'];
+            $password = $_POST['password'];
+            $result = $pdo->query("SELECT * FROM admin WHERE Id = '$id'");
+            if($result->rowCount()==1){
+                $row = $result->fetch();
+                if ($row['Password']==$password) {
+                    header("Location: homepage.php");
                 } else {
-                    echo "User not found.";
+                    header("Location: index.php");
                 }
-                $mysqli->close();
+            } else {
+                echo "User not found.";
             }
+            $mysqli->close();
         }
     }
 ?>
