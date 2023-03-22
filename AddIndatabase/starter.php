@@ -221,16 +221,22 @@ try {
                     "INSERT INTO admin ( Id,FirstName,LastName,Roll,Password)
                     VALUES
                         ('MA113666','Vedant','Bharad','MAIN ADMIN','MA113666VEDANT'),
-                        ('MA116063','Meet','Butani','MAIN ADMIN','MA116063MEET');"
+                        ('MA116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
+                        ('DEADB001','Ahmedabad','Depo','DEPO ADMIN','MA116063MEET'),
+                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
+                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
+                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
+                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
+                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
+                        ;"
                     // "INSERT INTO `routestops` (`TripId`, `StopIndex`, `DepoId`, `ArrivalTime`, `DepatureTime`)
                     // VALUES
-                    //     ('TRP001',1,1,NULL,'08:00:00'),
-                    //     ('TRP001',2,3,NULL,'08:00:00'),
-                    //     ('TRP001',3,11,NULL,'08:00:00'),
-                    //     ('TRP001',4,12,NULL,'08:00:00'),
-                    //     ('TRP001',5,10,NULL,'08:00:00'),
-                    //     ('TRP001',6,13,NULL,'08:00:00'),
-                    //     ('TRP001',7,6,NULL,'08:00:00');"
+                    //         ('TRP001',1,1,NULL,'08:00:00'),
+                    //         ('TRP001',2,3,'09:30:00','09:45:00'),
+                    //         ('TRP001',3,11,'10:45:00','11:00:00'),
+                    //         ('TRP001',4,12,'11:30:00','11:45:00'),
+                    //         ('TRP001',5,10,'12:15:00','12:30:00'),
+                    //         ('TRP001',6,13,'01:00:00','01:30:00');",
                         );
     foreach ($querys as $query) {
         $pdo->exec($query);
@@ -240,3 +246,38 @@ try {
     echo $query . "<br>" . $e->getMessage() . "</br>";
 }
 ?>
+
+
+<!-- 3 to 8 MEET -->
+<!-- 9 to 15 VEDANT -->
+
+<!-- "INSERT INTO `routestops` (`TripId`, `StopIndex`, `DepoId`, `ArrivalTime`, `DepatureTime`)
+                    VALUES
+                            ('TRP001',1,1,NULL,'08:00:00'),
+                            ('TRP001',2,3,'09:30:00','09:45:00'),
+                            ('TRP001',3,11,'10:45:00','11:00:00'),
+                            ('TRP001',4,12,'11:30:00','11:45:00'),
+                            ('TRP001',5,10,'12:15:00','12:30:00'),
+                            ('TRP001',6,13,'01:00:00','01:30:00'),
+
+                            ('TRP002',1,3,NULL,'08:00:00'),
+                            ('TRP002',2,11,'09:30:00','09:45:00'),
+                            ('TRP002',3,12,'10:45:00','11:00:00'),
+                            ('TRP002',4,1,'11:30:00','11:45:00'),
+                            ('TRP002',5,10,'12:15:00','12:30:00'),
+                            ('TRP002',6,13,'01:00:00','01:30:00'),
+                            ;", -->
+
+<!-- ('Ahmedabad Bus Depot', 10, 'Gheekanta Road', 'Near Kalupur Railway Station', 'Ahmedabad', 'Gujarat', '380002', '079-25461234', '079-25462345'),
+('Surat Bus Depot', 8, 'Ring Road', 'Near Udhna Darwaja', 'Surat', 'Gujarat', '395002', '0261-2546123', '0261-2546234'),
+('Vadodara Bus Depot', 12, 'Genda Circle', 'Near Lal Baug', 'Vadodara', 'Gujarat', '390005', '0265-2546123', '0265-2546234'),
+('Rajkot Bus Depot', 6, 'Gondal Road', 'Near Madhapar Chowkadi', 'Rajkot', 'Gujarat', '360006', '0281-2546123', NULL),
+('Bhavnagar Bus Depot', 4, 'Station Road', 'Near Jubilee Circle', 'Bhavnagar', 'Gujarat', '364001', '0278-2546123', NULL),
+('Gandhinagar Bus Depot', 3, 'Infocity Road', 'Near GH-5 Circle', 'Gandhinagar', 'Gujarat', '382009', '079-2546123', '079-2546234'),
+('Jamnagar Bus Depot', 5, 'Bedi Road', 'Near Gokul Nagar', 'Jamnagar', 'Gujarat', '361008', '0288-2546123', '0288-2546234'),
+('Junagadh Bus Depot', 2, 'Bilkha Road', 'Near Girnar Taleti', 'Junagadh', 'Gujarat', '362001', '0285-2546123', NULL),
+('Mehsana Bus Depot', 7, 'Modhera Road', 'Near Ganpat University', 'Mehsana', 'Gujarat', '384002', '02762-254612', '02762-254623'),
+('Bharuch Bus Depot', 4, 'NH-8', 'Near GNFC Township', 'Bharuch', 'Gujarat', '392015', '02642-254612', NULL),
+('Anand Bus Depot', 3, 'Near Sardar Patel Statue, V.V Nagar Road', 'Opp. HDFC Bank', 'Gujarat', '388001', '9876543210',NULL),
+('Nadiad Bus Depot', 2, 'Near Mahagujarat Industrial Estate, Chaklashi Road', 'Opposite Vyas Vadi, Nadiad', 'Gujarat', '387001', '9176543210',NULL),
+('Ankleshwar Bus Depot', 4, 'Plot No. 12/13, GIDC, Near Shilpi Party Plot', 'Old NH 8, Ankleshwar', 'Gujarat', '393002', '9876543211',NULL);", -->
