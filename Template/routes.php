@@ -9,17 +9,7 @@
 </head>
 
 <body>
-    <header>
-        <h1>Find My Bus</h1>
-        <nav>
-            <ul>
-                <li><a href="homepage.php">Home</a></li>
-                <li><a href="routes.php">Routes</a></li>
-                <li><a href="#">Tickets</a></li>
-                <li><a href="#">About Us</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include '../includeFiles/header.php'; ?>
     <main>
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <div class="searchdiv">
@@ -70,9 +60,7 @@
             </table>
         </div>
     </main>
-    <footer>
-        <p>&copy; 2023 Bus Transport System. All rights reserved.</p>
-    </footer>
+    <?php include '../includeFiles/footer.php'; ?>
 </body>
 
 </html>

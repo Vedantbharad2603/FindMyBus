@@ -144,7 +144,7 @@ try {
                         ('driver', 'Suresh', 'Chandra', 'Joshi', '1992-03-01', '2019-01-01', '2049-01-01', '1111 Main Street', 'Gujarat', 'Rajkot', 'Gujarat', '360001', '345678908524', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ031459523123456', '../staffdata/licence/licencephoto.jpg', '9876547865', NULL),
                         ('conductor', 'Deepak', 'Mohan', 'Desai', '1988-04-01', '2022-01-01', '2052-01-01', '2222 First Street', 'Gujarat', 'Jamnagar', 'Gujarat', '361001', '456858512345', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ031241231121456', '../staffdata/licence/licencephoto.jpg', '9877463450', NULL),
                         ('driver', 'Amit', 'V', 'Joshi', '1991-05-01', '2020-01-01', '2050-01-01', '3333 Second Street', 'Gujarat', 'Ahmedabad', 'Gujarat', '380001', '567890154456', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ031241231234546', '../staffdata/licence/licencephoto.jpg', '9876545210', NULL),
-                        ('conductor', 'Anjali', 'Rajesh', 'Shah', '1990-01-01', '2020-01-01', '2050-01-01', '1st Floor, Abhinav Tower', 'Nr. Shivam Hospital', 'Surat', 'Gujarat', '395009', '123456788712', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ012345446712721', '../staffdata/licence/licencephoto.jpg', '9876543210', NULL),
+                        ('conductor', 'Anjali', 'Rajesh', 'Shah', '1990-01-01', '2020-01-01', '2050-01-01', '1st Floor, Abhinav Tower', 'Nr. Shivam Hospital', 'Surat', 'Gujarat', '395009', '123456788712', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ012345446712721', '../staffdata/licence/licencephoto.jpg', '9876588210', NULL),
                         ('driver','Akash', 'Kumar', 'Patel', '1995-03-15', '2018-01-01', '2048-01-01', 'B-102, Shruti Villa', 'Behind Krishna Park', 'Ahmedabad', 'Gujarat', '380051', '234567899623', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ012341236456789', '../staffdata/licence/licencephoto.jpg', '9874143211', NULL),
                         ('conductor', 'Deepika', 'Bharat', 'Desai', '1985-05-12', '2015-01-01', '2045-01-01', 'Block No. 17, Gulab Society', 'Near D Mart', 'Vadodara', 'Gujarat', '390007', '345678901234', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ014789623456789', '../staffdata/licence/licencephoto.jpg', '9876951212', NULL),
                         ('driver', 'Rahul', 'Nilesh', 'Mehta', '1992-11-23', '2019-01-01', '2049-01-01', 'A-203, Anand Tower', 'Near Bhagwati Nagar', 'Rajkot', 'Gujarat', '360002', '456789012345', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ012348963256789', '../staffdata/licence/licencephoto.jpg', '9876745613', NULL),
@@ -161,17 +161,17 @@ try {
                         ('conductor', 'Ishaan', 'Gandhi', 'Shah', '1993-11-11', '2017-12-31', '2042-12-31', '15, Vrindavan Flats', 'Beside Temple', 'Vadodara', 'Gujarat', '390001', '599890123456', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ031241235457895', '../staffdata/licence/licencephoto.jpg', '9865543210', NULL);",
                     "INSERT INTO depo (Name, NoOfPlatforms, Address1, Address2, City, State, PinCode, WorkPhoneNo, SecondPhoneNo)
                     VALUES 
-                        ('Ahmedabad Bus Depot', 10, 'Gheekanta Road', 'Near Kalupur Railway Station', 'Ahmedabad', 'Gujarat', '380002', '079-25461234', '079-25462345'),
-                        ('Surat Bus Depot', 8, 'Ring Road', 'Near Udhna Darwaja', 'Surat', 'Gujarat', '395002', '0261-2546123', '0261-2546234'),
-                        ('Vadodara Bus Depot', 12, 'Genda Circle', 'Near Lal Baug', 'Vadodara', 'Gujarat', '390005', '0265-2546123', '0265-2546234'),
-                        ('Rajkot Bus Depot', 6, 'Gondal Road', 'Near Madhapar Chowkadi', 'Rajkot', 'Gujarat', '360006', '0281-2546123', NULL),
-                        ('Bhavnagar Bus Depot', 4, 'Station Road', 'Near Jubilee Circle', 'Bhavnagar', 'Gujarat', '364001', '0278-2546123', NULL),
-                        ('Gandhinagar Bus Depot', 3, 'Infocity Road', 'Near GH-5 Circle', 'Gandhinagar', 'Gujarat', '382009', '079-2546123', '079-2546234'),
-                        ('Jamnagar Bus Depot', 5, 'Bedi Road', 'Near Gokul Nagar', 'Jamnagar', 'Gujarat', '361008', '0288-2546123', '0288-2546234'),
-                        ('Junagadh Bus Depot', 2, 'Bilkha Road', 'Near Girnar Taleti', 'Junagadh', 'Gujarat', '362001', '0285-2546123', NULL),
-                        ('Mehsana Bus Depot', 7, 'Modhera Road', 'Near Ganpat University', 'Mehsana', 'Gujarat', '384002', '02762-254612', '02762-254623'),
-                        ('Bharuch Bus Depot', 4, 'NH-8', 'Near GNFC Township', 'Bharuch', 'Gujarat', '392015', '02642-254612', NULL),
-                        ('Anand Bus Depot', 3, 'Near Sardar Patel Statue, V.V Nagar Road', 'Opp. HDFC Bank', 'Gujarat', '388001', '9876543210',NULL),
+                        ('Ahmedabad Bus Depot', 10, 'Gheekanta Road', 'Near Kalupur Railway Station', 'Ahmedabad', 'Gujarat', '380002', '9225461234', '9825462345'),
+                        ('Surat Bus Depot', 8, 'Ring Road', 'Near Udhna Darwaja', 'Surat', 'Gujarat', '395002', '9982546123', '9125546234'),
+                        ('Vadodara Bus Depot', 12, 'Genda Circle', 'Near Lal Baug', 'Vadodara', 'Gujarat', '390005', '9952546123', '9925546234'),
+                        ('Rajkot Bus Depot', 6, 'Gondal Road', 'Near Madhapar Chowkadi', 'Rajkot', 'Gujarat', '360006', '9105461223', NULL),
+                        ('Bhavnagar Bus Depot', 4, 'Station Road', 'Near Jubilee Circle', 'Bhavnagar', 'Gujarat', '364001', '9642546123', NULL),
+                        ('Gandhinagar Bus Depot', 3, 'Infocity Road', 'Near GH-5 Circle', 'Gandhinagar', 'Gujarat', '382009', '9125546123', '9652546234'),
+                        ('Jamnagar Bus Depot', 5, 'Bedi Road', 'Near Gokul Nagar', 'Jamnagar', 'Gujarat', '361008', '9825446123', '8726554234'),
+                        ('Junagadh Bus Depot', 2, 'Bilkha Road', 'Near Girnar Taleti', 'Junagadh', 'Gujarat', '362001', '8772546123', NULL),
+                        ('Mehsana Bus Depot', 7, 'Modhera Road', 'Near Ganpat University', 'Mehsana', 'Gujarat', '384002', '9822546612', '9322545462'),
+                        ('Bharuch Bus Depot', 4, 'NH-8', 'Near GNFC Township', 'Bharuch', 'Gujarat', '392015', '9852546125', NULL),
+                        ('Anand Bus Depot', 3, 'Near Sardar Patel Statue, V.V Nagar Road', 'Opp. HDFC Bank', 'Gujarat', '388001', '9876543216',NULL),
                         ('Nadiad Bus Depot', 2, 'Near Mahagujarat Industrial Estate, Chaklashi Road', 'Opposite Vyas Vadi, Nadiad', 'Gujarat', '387001', '9176543210',NULL),
                         ('Ankleshwar', 4, 'Plot No. 12/13, GIDC, Near Shilpi Party Plot', 'Old NH 8, Ankleshwar', 'Gujarat', '393002', '9876543210',NULL);",
                     "INSERT INTO busschedule (TripId, Name, StartLocation, EndLocation,Distances,Price, DriverId, ConductorId, BusId) 
@@ -222,12 +222,19 @@ try {
                     VALUES
                         ('MA113666','Vedant','Bharad','MAIN ADMIN','MA113666VEDANT'),
                         ('MA116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
-                        ('DEADB001','Ahmedabad','Depo','DEPO ADMIN','MA116063MEET'),
-                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
-                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
-                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
-                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
-                        ('DE116063','Meet','Butani','MAIN ADMIN','MA116063MEET'),
+                        ('DEADB001','Ahmedabad','Depo','DEPO ADMIN','Ahmedabad001'),
+                        ('DESUR001','Surat','Depo','DEPO ADMIN','Surat001'),
+                        ('DEVAD001','Vadodara','Depo','DEPO ADMIN','Vadodara001'),
+                        ('DERAJ001','Rajkot','Depo','DEPO ADMIN','Rajkot001'),
+                        ('DEBHV001','Bhavnagar','Depo','DEPO ADMIN','Bhavnagar001'),
+                        ('DEGAN001','Gandhinagar','Depo','DEPO ADMIN','Gandhinagar001'),
+                        ('DEJAM001','Jamnagar','Depo','DEPO ADMIN','Jamnagar001'),
+                        ('DEJUN001','Junagadh','Depo','DEPO ADMIN','Junagadh001'),
+                        ('DEMHA001','Mehsana','Depo','DEPO ADMIN','Mehsana001'),
+                        ('DEBHA001','Bharuch','Depo','DEPO ADMIN','Bharuch001'),
+                        ('DEANA001','Anand','Depo','DEPO ADMIN','Anand001'),
+                        ('DENAD001','Nadiad','Depo','DEPO ADMIN','Nadiad001'),
+                        ('DEANK001','Ankleshwar','Depo','DEPO ADMIN','Ankleshwar001')
                         ;"
                     // "INSERT INTO `routestops` (`TripId`, `StopIndex`, `DepoId`, `ArrivalTime`, `DepatureTime`)
                     // VALUES
@@ -236,7 +243,15 @@ try {
                     //         ('TRP001',3,11,'10:45:00','11:00:00'),
                     //         ('TRP001',4,12,'11:30:00','11:45:00'),
                     //         ('TRP001',5,10,'12:15:00','12:30:00'),
-                    //         ('TRP001',6,13,'01:00:00','01:30:00');",
+                    //         ('TRP001',6,13,'01:00:00','01:30:00'),
+
+                    //         ('TRP002',1,3,NULL,'08:00:00'),
+                    //         ('TRP002',2,11,'09:30:00','09:45:00'),
+                    //         ('TRP002',3,12,'10:45:00','11:00:00'),
+                    //         ('TRP002',4,1,'11:30:00','11:45:00'),
+                    //         ('TRP002',5,10,'12:15:00','12:30:00'),
+                    //         ('TRP002',6,13,'01:00:00','01:30:00'),
+                    //         ;",
                         );
     foreach ($querys as $query) {
         $pdo->exec($query);
@@ -246,38 +261,3 @@ try {
     echo $query . "<br>" . $e->getMessage() . "</br>";
 }
 ?>
-
-
-<!-- 3 to 8 MEET -->
-<!-- 9 to 15 VEDANT -->
-
-<!-- "INSERT INTO `routestops` (`TripId`, `StopIndex`, `DepoId`, `ArrivalTime`, `DepatureTime`)
-                    VALUES
-                            ('TRP001',1,1,NULL,'08:00:00'),
-                            ('TRP001',2,3,'09:30:00','09:45:00'),
-                            ('TRP001',3,11,'10:45:00','11:00:00'),
-                            ('TRP001',4,12,'11:30:00','11:45:00'),
-                            ('TRP001',5,10,'12:15:00','12:30:00'),
-                            ('TRP001',6,13,'01:00:00','01:30:00'),
-
-                            ('TRP002',1,3,NULL,'08:00:00'),
-                            ('TRP002',2,11,'09:30:00','09:45:00'),
-                            ('TRP002',3,12,'10:45:00','11:00:00'),
-                            ('TRP002',4,1,'11:30:00','11:45:00'),
-                            ('TRP002',5,10,'12:15:00','12:30:00'),
-                            ('TRP002',6,13,'01:00:00','01:30:00'),
-                            ;", -->
-
-<!-- ('Ahmedabad Bus Depot', 10, 'Gheekanta Road', 'Near Kalupur Railway Station', 'Ahmedabad', 'Gujarat', '380002', '079-25461234', '079-25462345'),
-('Surat Bus Depot', 8, 'Ring Road', 'Near Udhna Darwaja', 'Surat', 'Gujarat', '395002', '0261-2546123', '0261-2546234'),
-('Vadodara Bus Depot', 12, 'Genda Circle', 'Near Lal Baug', 'Vadodara', 'Gujarat', '390005', '0265-2546123', '0265-2546234'),
-('Rajkot Bus Depot', 6, 'Gondal Road', 'Near Madhapar Chowkadi', 'Rajkot', 'Gujarat', '360006', '0281-2546123', NULL),
-('Bhavnagar Bus Depot', 4, 'Station Road', 'Near Jubilee Circle', 'Bhavnagar', 'Gujarat', '364001', '0278-2546123', NULL),
-('Gandhinagar Bus Depot', 3, 'Infocity Road', 'Near GH-5 Circle', 'Gandhinagar', 'Gujarat', '382009', '079-2546123', '079-2546234'),
-('Jamnagar Bus Depot', 5, 'Bedi Road', 'Near Gokul Nagar', 'Jamnagar', 'Gujarat', '361008', '0288-2546123', '0288-2546234'),
-('Junagadh Bus Depot', 2, 'Bilkha Road', 'Near Girnar Taleti', 'Junagadh', 'Gujarat', '362001', '0285-2546123', NULL),
-('Mehsana Bus Depot', 7, 'Modhera Road', 'Near Ganpat University', 'Mehsana', 'Gujarat', '384002', '02762-254612', '02762-254623'),
-('Bharuch Bus Depot', 4, 'NH-8', 'Near GNFC Township', 'Bharuch', 'Gujarat', '392015', '02642-254612', NULL),
-('Anand Bus Depot', 3, 'Near Sardar Patel Statue, V.V Nagar Road', 'Opp. HDFC Bank', 'Gujarat', '388001', '9876543210',NULL),
-('Nadiad Bus Depot', 2, 'Near Mahagujarat Industrial Estate, Chaklashi Road', 'Opposite Vyas Vadi, Nadiad', 'Gujarat', '387001', '9176543210',NULL),
-('Ankleshwar Bus Depot', 4, 'Plot No. 12/13, GIDC, Near Shilpi Party Plot', 'Old NH 8, Ankleshwar', 'Gujarat', '393002', '9876543211',NULL);", -->
