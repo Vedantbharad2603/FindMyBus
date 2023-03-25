@@ -24,7 +24,7 @@
             <table>
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    include_once "../includeFiles/connections.php";
+                    require "../includeFiles/connections.php";
                     if(isset($_POST["Showall"])){
                         $result = $pdo->query("SELECT * FROM busschedule");
                         if($result->rowCount()>0){

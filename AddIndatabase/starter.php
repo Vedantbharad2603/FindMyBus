@@ -68,7 +68,7 @@ try {
                         State VARCHAR(255) NOT NULL,
                         PinCode VARCHAR(10) NOT NULL,
                         WorkPhoneNo VARCHAR(11) NOT NULL,
-                        SecondPhoneNo VARCHAR(11) DEFAULT NULL
+                        SecondPhoneNo VARCHAR(11)
                     );",
                 "CREATE TABLE IF NOT EXISTS busschedule (
                         TripId VARCHAR(15) NOT NULL PRIMARY KEY,
@@ -171,9 +171,9 @@ try {
                         ('Junagadh Bus Depot', 2, 'Bilkha Road', 'Near Girnar Taleti', 'Junagadh', 'Gujarat', '362001', '8772546123', NULL),
                         ('Mehsana Bus Depot', 7, 'Modhera Road', 'Near Ganpat University', 'Mehsana', 'Gujarat', '384002', '9822546612', '9322545462'),
                         ('Bharuch Bus Depot', 4, 'NH-8', 'Near GNFC Township', 'Bharuch', 'Gujarat', '392015', '9852546125', NULL),
-                        ('Anand Bus Depot', 3, 'Near Sardar Patel Statue, V.V Nagar Road', 'Opp. HDFC Bank', 'Gujarat', '388001', '9876543216',NULL),
-                        ('Nadiad Bus Depot', 2, 'Near Mahagujarat Industrial Estate, Chaklashi Road', 'Opposite Vyas Vadi, Nadiad', 'Gujarat', '387001', '9176543210',NULL),
-                        ('Ankleshwar', 4, 'Plot No. 12/13, GIDC, Near Shilpi Party Plot', 'Old NH 8, Ankleshwar', 'Gujarat', '393002', '9876543210',NULL);",
+                        ('Anand Bus Depot', 3, 'Near Sardar Patel Statue, V.V Nagar Road', 'Opp. HDFC Bank','Anand', 'Gujarat', '388001', '9876543216',NULL),
+                        ('Nadiad Bus Depot', 2, 'Near Mahagujarat Industrial Estate, Chaklashi Road', 'Opposite Vyas Vadi',' Nadiad', 'Gujarat', '387001', '9176543210',NULL),
+                        ('Ankleshwar', 4, 'Plot No. 12/13, GIDC, Near Shilpi Party Plot', 'Old NH 8', 'Ankleshwar', 'Gujarat', '393002', '9876543210',NULL);",
                     "INSERT INTO busschedule (TripId, Name, StartLocation, EndLocation,Distances,Price, DriverId, ConductorId, BusId) 
                     VALUES 
                         ('TRP001', 'Ahmedabad To Surat', 'Ahmedabad', 'Surat',278,417, 1, 2, 1),
