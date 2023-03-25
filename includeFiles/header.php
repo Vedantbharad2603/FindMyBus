@@ -10,17 +10,26 @@
             $row = $result->fetch();
             if($result->rowCount()>0){
                 if ($row['Roll']=='MAIN ADMIN' || $row['Roll']=='DEPO ADMIN'){
+                    date_default_timezone_set('Asia/Kolkata');
+                    $current_hour = date('H'); // get current hour in 24-hour format
+                    if ($current_hour >= 5 && $current_hour < 12) {
+                        $time="Good Morning";
+                    } elseif ($current_hour >= 12 && $current_hour < 18) {
+                        $time="Good Afternoon";
+                    } else {
+                        $time="Good Evening";
+                    }
                     if ($row['Roll']=='MAIN ADMIN') {
                         $_SESSION["SessUserName"]=$row["FirstName"]." ".$row["LastName"];
                         ?>
-                            <h3><?php echo("Nice to meet you! ". $_SESSION["SessUserName"])?></h3>
+                            <h3><?php echo($time.'! '. $_SESSION["SessUserName"])?></h3>
                         <?php
                         // print_r($_SESSION["SessUserName"]);
                     }
                     elseif ($row['Roll']=='DEPO ADMIN') {
                         $_SESSION["SessDepo"]=$row["FirstName"];
                         ?>
-                            <h3><?php echo("HELLO! ".$_SESSION["SessDepo"])?></h3>
+                            <h3><?php echo($time.'! '.$_SESSION["SessDepo"])?></h3>
                         <?php
                         // print_r($_SESSION["SessDepo"]);
                     }

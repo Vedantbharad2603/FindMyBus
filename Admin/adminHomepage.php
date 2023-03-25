@@ -8,19 +8,20 @@
     <body>
         <?php include '../includeFiles/header.php'; ?>
         <main>
-            <input type="submit" id="showbuses" class="searchbt" value="Buses">
+            <input type="submit" id="showbuses" class="searchbt" value="Buses" style="background-color:#182C61">
             <input type="submit" id="showbusschedule" class="searchbt" value="Busschedule">
             <input type="submit" id="showdepo" class="searchbt" value="Depo">
             <input type="submit" id="showroutestop" class="searchbt" value="Routestop">
             <input type="submit" id="showstaff" class="searchbt" value="Staff">
-            <div id="busesDiv" style="display: none">
+            <br><br>
+            <div id="busesDiv" style="display: block">
             <?php
                 require "../includeFiles/connections.php";
                 $result = $pdo->query("SELECT * FROM buses");
                 if($result->rowCount()>0)
                 {
                     echo "<table>";
-                    echo "<tr><th>ID</th><th>Bus Number</th><th>Type</th><th>Total Seats</th><th>EngineNo</th><th>Insurance No</th></tr>";
+                    echo "<tr><th>ID</th><th>Bus Number</th><th>Type</th><th>Total Seats</th><th>EngineNo</th><th>Insurance No</th><th>ACTION</th></tr>";
                     // <th>DELETE</th>
                     while($row = $result->fetch()){
                         ?>
@@ -31,6 +32,8 @@
                             <td><?php echo $row['TotalSeats']; ?></td>
                             <td><?php echo $row['EngineNo']; ?></td>
                             <td><?php echo $row['InsuranceNo']; ?></td>
+                            <td><a href="edit_cars.php?id=<?php echo $row['Id'];?>">Edit </a>  | <a href="delete_cars.php?id=<?php echo $row['Id'];?>" onclick="return confirm('Are you sure to delete it?');">DELETE </a></td>
+                            
                         </tr>
                         <?php
                     }
@@ -94,7 +97,7 @@
             <div id="routestopDiv" style="display:none">
             <h2>Working on that</h2>
             </div>
-            <div id="staffDiv" style="display:block">
+            <div id="staffDiv" style="display:none">
             <?php
                 require "../includeFiles/connections.php";
                 $result = $pdo->query("SELECT * FROM staff");

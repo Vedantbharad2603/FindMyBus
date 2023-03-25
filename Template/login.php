@@ -12,9 +12,9 @@
             <h1>Login</h1>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <label for="id">ID:</label>
-                <input type="text" name="id" id="id" placeholder="Enter ID">
+                <input type="text" name="id" id="id" placeholder="Enter ID" required>
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Enter your password">
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
                 <input type="submit" value="Login">
             </form>
         </div>
@@ -39,7 +39,7 @@
                         $_SESSION["SessRoll"]='ADMIN';
                     }
                     // header("Location: homepage.php");
-                    header("Location: ../Admin/homepage.php");
+                    header("Location: ../Admin/adminHomepage.php");
                 } else {
                     header("Location: login.php");
                 }
