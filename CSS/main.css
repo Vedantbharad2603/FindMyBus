@@ -128,19 +128,7 @@ footer {
     margin-left: auto;
     margin-right: auto;
 }
-table {
-    border-collapse: collapse;
-    box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    text-indent: initial;
-    border-spacing: 2px;
-    /* border-color: grey; */
-}
-td,th{
-    border: 4px solid gray !important;
-    padding: 5px;
-}
+
 
 .searchdiv {
     display: inline-flex;

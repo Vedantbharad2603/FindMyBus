@@ -8,11 +8,11 @@
     <body>
         <?php include '../includeFiles/header.php'; ?>
         <main>
-            <input type="submit" id="showbuses" class="searchbt" value="Buses" style="background-color:#182C61">
-            <input type="submit" id="showbusschedule" class="searchbt" value="Busschedule">
-            <input type="submit" id="showdepo" class="searchbt" value="Depo">
-            <input type="submit" id="showroutestop" class="searchbt" value="Routestop">
-            <input type="submit" id="showstaff" class="searchbt" value="Staff">
+            <input type="submit" id="showbuses" onclick="javaScript:showrouteAdmin()" class="searchbt" value="Buses" style="background-color:#182C61">
+            <input type="submit" id="showbusschedule" onclick="javaScript:showbusscheduleAdmin()" class="searchbt" value="Busschedule">
+            <input type="submit" id="showdepo" onclick="javaScript:showdepoAdmin()" class="searchbt" value="Depo">
+            <input type="submit" id="showroutestop" onclick="javaScript:showroutestopAdmin()" class="searchbt" value="Routestop">
+            <input type="submit" id="showstaff" onclick="javaScript:showstaffAdmin()" class="searchbt" value="Staff">
             <br><br>
             <div id="busesDiv" style="display: block">
             <?php

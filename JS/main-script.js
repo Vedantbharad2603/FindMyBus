@@ -68,8 +68,8 @@ function showstaffAdmin(){
     document.getElementById('showstaff').style.backgroundColor= "#182C61";
 }
 
-document.getElementById('showbuses').onclick=showrouteAdmin;
-document.getElementById('showbusschedule').onclick=showbusscheduleAdmin;
-document.getElementById('showdepo').onclick=showdepoAdmin;
-document.getElementById('showroutestop').onclick=showroutestopAdmin;
-document.getElementById('showstaff').onclick=showstaffAdmin;
+// document.getElementById('showbuses').onclick=showrouteAdmin;
+// document.getElementById('showbusschedule').onclick=showbusscheduleAdmin;
+// document.getElementById('showdepo').onclick=showdepoAdmin;
+// document.getElementById('showroutestop').onclick=showroutestopAdmin;
+// document.getElementById('showstaff').onclick=showstaffAdmin;
