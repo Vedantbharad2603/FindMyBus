@@ -32,6 +32,7 @@ try {
                         Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                         BusNumber VARCHAR(50) NOT NULL,
                         Type VARCHAR(50) NOT NULL,
+                        fualType VARCHAR(20) NOT NULL,
                         TotalSeats INT NOT NULL,
                         EngineNo VARCHAR(100) NOT NULL,
                         InsuranceNo VARCHAR(100) NOT NULL
@@ -100,23 +101,23 @@ try {
         $pdo->exec($query);
     }
     echo "Database TO table created successfully" . "</br>";
-    $querys = array("INSERT INTO `buses` (`BusNumber`, `Type`, `TotalSeats`, `EngineNo`, `InsuranceNo`)
+    $querys = array("INSERT INTO `buses` (`BusNumber`, `Type`,`fualType`,`TotalSeats`, `EngineNo`, `InsuranceNo`)
                     VALUES 
-                        ('ABC123', 'Sleeper', 40, '123456', 'INS123'),
-                        ('DEF456', 'Seater', 30, '789012', 'INS456'),
-                        ('GHI789', 'Sleeper', 40, '345678', 'INS789'),
-                        ('JKL012', 'Seater', 30, '901234', 'INS012'),
-                        ('MNO345', 'Sleeper', 40, '567890', 'INS345'),
-                        ('PQR678', 'Seater', 30, '123789', 'INS678'),
-                        ('STU901', 'Sleeper', 40, '890123', 'INS901'),
-                        ('VWX234', 'Seater', 30, '456789', 'INS234'),
-                        ('YZA567', 'Sleeper', 40, '012345', 'INS567'),
-                        ('BCD890', 'Seater', 30, '678901', 'INS890'),
-                        ('EFG123', 'Sleeper', 40, '234567', 'INS123'),
-                        ('HIJ456', 'Seater', 30, '890123', 'INS456'),
-                        ('KLM789', 'Sleeper', 40, '456789', 'INS789'),
-                        ('NOP012', 'Seater', 30, '012345', 'INS012'),
-                        ('QRS345', 'Sleeper', 40, '678901', 'INS345');",
+                        ('ABC123', 'Sleeper','Diesel', 40, '123456', 'INS123'),
+                        ('DEF456', 'Seater','Electric', 30, '789012', 'INS456'),
+                        ('GHI789', 'Sleeper','Diesel', 40, '345678', 'INS789'),
+                        ('JKL012', 'Seater','Electric', 30, '901234', 'INS012'),
+                        ('MNO345', 'Sleeper','Diesel', 40, '567890', 'INS345'),
+                        ('PQR678', 'Seater','Electric', 30, '123789', 'INS678'),
+                        ('STU901', 'Sleeper','Diesel', 40, '890123', 'INS901'),
+                        ('VWX234', 'Seater','Diesel', 30, '456789', 'INS234'),
+                        ('YZA567', 'Sleeper','Electric', 40, '012345', 'INS567'),
+                        ('BCD890', 'Seater','Diesel', 30, '678901', 'INS890'),
+                        ('EFG123', 'Sleeper','Electric', 40, '234567', 'INS123'),
+                        ('HIJ456', 'Seater','Diesel', 30, '890123', 'INS456'),
+                        ('KLM789', 'Sleeper','Electric', 40, '456789', 'INS789'),
+                        ('NOP012', 'Seater','Diesel', 30, '012345', 'INS012'),
+                        ('QRS345', 'Sleeper','Diesel', 40, '678901', 'INS345');",
                     "INSERT INTO staff (Type, FirstName, MiddleName, LastName, DOB, JoiningDate, RetirementDate, Address1, Address2, City, State, PinCode, AddarCardNo, AddarCardURL, ProfilePhotoURL, LicenceNo, LicenceURL, WorkMobileNo, HomeMobileNo)
                     VALUES
                         ('driver', 'Amit', 'Kumar', 'Sharma', '1992-05-23', '2020-02-01', '2055-02-01', 'Sarkhej-Gandhinagar Highway', 'Opp. Rajpath Club', 'Ahmedabad', 'Gujarat', '380015', '111111111111', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ012015010123456', '../staffdata/Licence/licencePhoto.jpg', '9976543210', NULL),

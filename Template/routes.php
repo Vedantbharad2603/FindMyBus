@@ -21,6 +21,7 @@
                 $tmppickup="";
                 $tmpdrop="";
                 $tmptype="";
+                $tmpfual="";
                 if (isset($_POST["pickupcity"])){
                     $tmppickup=$_POST["pickupcity"];
                 }
@@ -29,6 +30,9 @@
                 }
                 if (isset($_POST["SeatType"])){
                     $tmptype=$_POST["SeatType"];
+                }
+                if (isset($_POST["Fual"])){
+                    $tmpfual=$_POST["Fual"];
                 }
             ?>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -78,6 +82,20 @@
                             }
                         ?>
                     </select>
+                    <select name="Fual" id="Fual">
+                        <option value="">ANY</option>
+                        <?php
+                            $qrysl="SELECT distinct fualType FROM buses WHERE Id in (SELECT BusId FROM busschedule)";
+                            $resultst = $pdo->query($qrysl);
+                            if($resultst->rowCount()>0){
+                                while ($row = $resultst->fetch()) {
+                                    ?>
+                                    <option value="<?php echo $row["fualType"] ?>" <?php if($row["fualType"]==$tmpfual) echo " SELECTED"; ?> ><?php echo $row["fualType"] ?></option>
+                                    <?php
+                                }
+                            }
+                        ?>
+                    </select>
                     <input type="submit" id="SubmitButton" class="searchbt" value="Show">
                 </div>
             </form>
@@ -88,7 +106,7 @@
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     require "../includeFiles/connections.php";
-                    $qry="SELECT *,(SELECT `Type` From Buses WHERE Id=busschedule.BusId ) as `seatType`  FROM busschedule WHERE 1=1 ";
+                    $qry="SELECT *,(SELECT `Type` From Buses WHERE Id=busschedule.BusId ) as `seatType`,(SELECT `fualType` From Buses WHERE Id=busschedule.BusId ) as `fual` FROM busschedule WHERE 1=1 ";
                     if(!empty($_POST["pickupcity"]))
                     {
                         $qry=$qry." AND StartLocation = '".$_POST["pickupcity"] ."' ";
@@ -101,11 +119,15 @@
                     {
                         $qry = $qry." AND BusId in (SELECT Id FROM buses WHERE Type='". $tmptype ."')";
                     }
+                    if(!empty($_POST["Fual"]))
+                    {
+                        $qry = $qry." AND BusId in (SELECT Id FROM buses WHERE fualType='". $tmpfual ."')";
+                    }
                     $result = $pdo->query($qry);
                     if($result->rowCount()>0){
-                        echo " <thead> <tr><th>ID</th><th>Name</th><th>Start Location</th><th>End Location </th><th>Distances </th><th>Price(in ₹)</th><th>SeatType</th></tr> </thead> <tbody>";
+                        echo " <thead> <tr><th>Name</th><th>ID</th><th>Start Location</th><th>End Location </th><th>Distances </th><th>Price(in ₹)</th><th>SeatType</th> <th>fualType</th></tr> </thead> <tbody>";
                         while ($row = $result->fetch()) {
-                            echo "<tr><td>" . $row["TripId"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["StartLocation"] . "</td><td>" . $row["EndLocation"]."</td><td>" . $row["Distances"]."</td><td>" . $row["Price"] ."</td><td>" . $row["seatType"] ."</td></tr>";
+                            echo "<tr><td>" . $row["Name"] . "</td><td>" . $row["TripId"] . "</td><td>" . $row["StartLocation"] . "</td><td>" . $row["EndLocation"]."</td><td>" . $row["Distances"]."</td><td>" . $row["Price"] ."</td><td>" . $row["seatType"] ."</td><td>" . $row["fual"] ."</td></tr>";
                         }
                         echo "<tbody>";
                         echo '<script>
