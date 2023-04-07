@@ -3,20 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- add title -->
     <title>Find My Bus</title>
+    <!-- add main style -->
     <link rel="stylesheet" type="text/css" href="../CSS/main.css?ved">
 
+    <!-- this is for data table -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
+    <!-- add main script -->
     <script src="../JS/main-script.js"></script>
 </head>
 
 <body>
+    <!-- include header -->
     <?php include '../includeFiles/header.php'; ?>
     <main>
         <div>
+            <!-- set choice in php variables -->
             <?php 
                 $tmppickup="";
                 $tmpdrop="";
@@ -35,6 +41,7 @@
                     $tmpfual=$_POST["Fual"];
                 }
             ?>
+            <!-- add all choice for search bus -->
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <div class="searchdiv">
                     <input type="hidden" id="form" name="form" value="show_route" >
@@ -52,8 +59,6 @@
                             }
                         ?>
                     </select>
-                    <!-- <input class="searchcity" type="text" id="pickupcity" name="pickupcity" placeholder="Pickup city"> -->
-                    <!-- <input class="searchcity" type="text" id="dropcity" name="dropcity" placeholder="Drop city"> -->
                     <select name="dropcity" id="dropcity">
                         <option value="">ANY</option>
                         <?php
@@ -100,7 +105,8 @@
                 </div>
             </form>
         </div>
-        <div class="showdata"  id="datatable">
+        <!-- this div containes result Routes -->
+        <div class="showdata"  id="datatable" style="display: none;">
             <h2>Routes</h2>
             <table id="routTable" class="display">
                 <?php
@@ -142,7 +148,10 @@
             </table>
         </div>
     </main>
+    <!-- include footer -->
     <?php include '../includeFiles/footer.php'; ?>
+
+    <!-- this script will automatically add table data to jquery.dataTables -->
     <script>
         $(document).ready( function () {
             $('#routTable').DataTable();
