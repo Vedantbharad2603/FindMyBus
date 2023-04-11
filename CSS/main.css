@@ -5,6 +5,10 @@ body {
     background-color: #b2bec3;
 }
 
+.error {
+    color: #FF0001;
+}
+
 .login-box {
     width: 300px;
     margin: 100px auto;
@@ -142,4 +146,5 @@ footer {
     padding: 20px;
     background-color: #dfe6e9;
     border-radius: 15px;
+    width: auto;
 }

@@ -76,14 +76,14 @@
                 }
             ?>
             </div>
-            <div id="depoDiv" style="display:none">
+            <div id="depoDiv" style="display:none" class="adminTable">
+            <table id="depotable" class="display">
             <?php
                 require "../includeFiles/connections.php";
                 $result = $pdo->query("SELECT * FROM depo");
                 if($result->rowCount()>0)
                 {
-                    echo "<table>";
-                    echo "<tr><th>ID</th><th>Name</th><th>No of Platforms</th><th>Address</th><th>City</th><th>State</th><th>Pin Code</th><th>Work Phone No</th><th>Second Phone No</th></tr>";
+                    echo "<thead> <tr><th>ID</th><th>Name</th><th>No of Platforms</th><th>Address</th><th>City</th><th>State</th><th>Pin Code</th><th>Work Phone No</th><th>Second Phone No</th></tr> </thead> <tbody>";
                     // <th>DELETE</th>
                     while($row = $result->fetch()){
                         ?>
@@ -100,21 +100,22 @@
                         </tr>
                         <?php
                     }
+                    echo "<tbody>";
                     echo "</table>";
                 }
             ?>
             </div>
-            <div id="routestopDiv" style="display:none">
+            <div id="routestopDiv" style="display:none" class="adminTable">
             <h2>Working on that</h2>
             </div>
-            <div id="staffDiv" style="display:none">
+            <div id="staffDiv" style="display:none" class="adminTable">
+            <table id="stafftable" class="display">
             <?php
                 require "../includeFiles/connections.php";
                 $result = $pdo->query("SELECT * FROM staff");
                 if($result->rowCount()>0)
                 {
-                    echo "<table>";
-                    echo "<tr><th>ID</th><th>Type</th><th>Name</th><th>DOB</th><th>JoiningDate</th>><th>RetirementDate</th><th>Address</th><th>City</th><th>State</th><th>PinCode</th><th>AddarCardNo</th><th>LicenceNo</th><th>WorkMobileNo</th><th>HomeMobileNo</th></tr>";
+                    echo "<thead> <tr><th>Id</th> <th>Type</th> <th>Name</th> <th>DOB</th> <th>JoiningDate</th> <th>RetirementDate</th> <th>Address</th> <th>City</th> <th>State</th> <th>PinCode</th> <th>AddarCardNo</th> <th>LicenceNo</th> <th>WorkMobileNo</th> <th>HomeMobileNo</th> <th>Actions</th> </tr> </thead> <tbody>";
                     while($row = $result->fetch()){
                         ?>
                         <tr>
@@ -132,9 +133,11 @@
                             <td><?php echo $row['LicenceNo']; ?></td>
                             <td><?php echo $row['WorkMobileNo']; ?></td>
                             <td><?php echo $row['HomeMobileNo']; ?></td>
+                            <td><a href="Edit/Editstaff.php?id=<?php echo $row['Id'];?>">Edit </a>  | <a href="Delete/Deletestaff.php?id=<?php echo $row['Id'];?>" onclick="return confirm('Are you sure to delete it? It will effect on Busschedule Data Table');">DELETE </a></td>
                         </tr>
                         <?php
                     }
+                    echo "<tbody>";
                     echo "</table>";
                 }
             ?>
@@ -147,6 +150,9 @@
         $(document).ready( function () {
             $('#busestable').DataTable();
             $('#busscheduletable').DataTable();
+            $('#depotable').DataTable();
+            $('#stafftable').DataTable();
+            
         } );
     </script>
     <!-- add main script -->

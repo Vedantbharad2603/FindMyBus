@@ -31,8 +31,8 @@ try {
                 "CREATE TABLE IF NOT EXISTS buses (
                         Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                         BusNumber VARCHAR(50) NOT NULL,
-                        Type VARCHAR(50) NOT NULL,
-                        fualType VARCHAR(20) NOT NULL,
+                        BusType VARCHAR(50) NOT NULL,
+                        FualType VARCHAR(20) NOT NULL,
                         TotalSeats INT NOT NULL,
                         EngineNo VARCHAR(100) NOT NULL,
                         InsuranceNo VARCHAR(100) NOT NULL
@@ -57,11 +57,11 @@ try {
                         LicenceNo VARCHAR(50) NOT NULL,
                         LicenceURL VARCHAR(255) NOT NULL,
                         WorkMobileNo VARCHAR(10) NOT NULL,
-                        HomeMobileNo VARCHAR(10) DEFAULT NULL
+                        SecondPhoneNo VARCHAR(10) DEFAULT NULL
                     );",
                 "CREATE TABLE IF NOT EXISTS depo (
                         Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                        Name VARCHAR(50) NOT NULL,
+                        DepoName VARCHAR(50) NOT NULL,
                         NoOfPlatforms INT NOT NULL,
                         Address1 VARCHAR(255) NOT NULL,
                         Address2 VARCHAR(255) NOT NULL,
@@ -73,7 +73,7 @@ try {
                     );",
                 "CREATE TABLE IF NOT EXISTS busschedule (
                         TripId VARCHAR(15) NOT NULL PRIMARY KEY,
-                        Name VARCHAR(50) NOT NULL,
+                        TripName VARCHAR(50) NOT NULL,
                         StartLocation VARCHAR(100) NOT NULL,
                         EndLocation VARCHAR(100) NOT NULL,
                         Distances INT,
@@ -101,7 +101,7 @@ try {
         $pdo->exec($query);
     }
     echo "Database TO table created successfully" . "</br>";
-    $querys = array("INSERT INTO `buses` (`BusNumber`, `Type`,`fualType`,`TotalSeats`, `EngineNo`, `InsuranceNo`)
+    $querys = array("INSERT INTO `buses` (`BusNumber`, `BusType`,`FualType`,`TotalSeats`, `EngineNo`, `InsuranceNo`)
                     VALUES 
                         ('ABC123', 'Sleeper','Diesel', 40, '123456', 'INS123'),
                         ('DEF456', 'Seater','Electric', 30, '789012', 'INS456'),
