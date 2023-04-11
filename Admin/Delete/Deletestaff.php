@@ -1,5 +1,5 @@
 <?php
-    require("../../includeFiles/connections.php");
+    require "../../includeFiles/connections.php";
     try{
         $sql1 = "DELETE FROM busschedule WHERE DriverId=? or ConductorId=?";
         $statement= $pdo->prepare($sql1);
