@@ -133,7 +133,7 @@
                     if($result->rowCount()>0){
                         echo " <thead> <tr><th>Name</th><th>ID</th><th>Start Location</th><th>End Location </th><th>Distances </th><th>Price(in ₹)</th><th>SeatType</th> <th>fualType</th></tr> </thead> <tbody>";
                         while ($row = $result->fetch()) {
-                            echo "<tr><td>" . $row["Name"] . "</td><td>" . $row["TripId"] . "</td><td>" . $row["StartLocation"] . "</td><td>" . $row["EndLocation"]."</td><td>" . $row["Distances"]."</td><td>" . $row["Price"] ."</td><td>" . $row["seatType"] ."</td><td>" . $row["fual"] ."</td></tr>";
+                            echo "<tr><td>" . $row["TripName"] . "</td><td>" . $row["TripId"] . "</td><td>" . $row["StartLocation"] . "</td><td>" . $row["EndLocation"]."</td><td>" . $row["Distances"]."</td><td>" . $row["Price"] ."</td><td>" . $row["seatType"] ."</td><td>" . $row["fual"] ."</td></tr>";
                         }
                         echo "<tbody>";
                         echo '<script>

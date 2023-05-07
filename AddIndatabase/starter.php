@@ -98,7 +98,7 @@ try {
                 "CREATE TABLE IF NOT EXISTS busstatus (
                         busid INT NOT NULL,
                         currentDepo INT NOT NULL,
-                        delaytime time NOT NULL,
+                        delaytimeInminutes int NOT NULL,
                         FOREIGN KEY (busid) REFERENCES buses(Id),
                         FOREIGN KEY (currentDepo) REFERENCES depo(Id)
                         );",
@@ -330,18 +330,18 @@ try {
                             ('TRP008',5,24,'12:15:00','12:30:00'),
                             ('TRP008',6,25,'01:00:00','01:30:00'),
                             ('TRP008',7,9,'02:00:00',NULL);",
-                    "INSERT INTO busstatus (busid,currentDepo, delaytime)
+                    "INSERT INTO busstatus (busid,currentDepo, delaytimeInminutes)
                     VALUES 
-                            (1,0, '00:00:00'),
-                            (2,0, '00:00:00'),
-                            (3,0, '00:00:00'),
-                            (4,0, '00:00:00'),
-                            (5,0, '00:00:00'),
-                            (6,0, '00:00:00'),
-                            (7,0, '00:00:00'),
-                            (8,0, '00:00:00'),
-                            (9,0, '00:00:00'),
-                            (10,0, '00:00:00');"
+                            (1,1, 0),
+                            (2,1, 0),
+                            (3,1, 0),
+                            (4,1, 0),
+                            (5,1, 0),
+                            (6,1, 0),
+                            (7,1, 0),
+                            (8,1, 0),
+                            (9,1, 0),
+                            (10,1, 0);"
                         );
     foreach ($querys as $query) {
         $pdo->exec($query);

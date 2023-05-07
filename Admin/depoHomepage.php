@@ -22,20 +22,24 @@
                 require "../includeFiles/connections.php";
                 $deponame=$_SESSION["Sessdeponame"].'%';
                 // echo ("SELECT * from routestops where DepoId=(SELECT id from depo where DepoName like '".$deponame."')");
-                $result = $pdo->query("SELECT * from routestops where DepoId=(SELECT id from depo where DepoName like '".$deponame."')");
+                $result = $pdo->query("SELECT busschedule.TripName,routestops.TripId,StopIndex,routestops.DepoId,ArrivalTime,DepatureTime,BusId from routestops
+                INNER JOIN depo ON routestops.DepoId=depo.Id 
+                inner join busschedule on busschedule.TripId=routestops.TripId
+                where depo.DepoName LIKE '".$deponame."' order by routestops.ArrivalTime");
                 if($result->rowCount()>0)
                 {
-                    echo " <thead> <tr><th>TripId</th><th>StopIndex</th><th>DepoId</th><th>ArrivalTime</th><th>DepatureTime</th><th>Arrived</th></tr> </thead> <tbody>";
+                    echo " <thead> <tr><th>Trip Name</th><th>TripId</th><th>StopIndex</th><th>DepoId</th><th>ArrivalTime</th><th>DepatureTime</th><th>Arrived</th></tr> </thead> <tbody>";
                     // <th>DELETE</th>
                     while($row = $result->fetch()){
                         ?>
                         <tr>
+                            <td><?php echo $row['TripName']; ?></td>
                             <td><?php echo $row['TripId']; ?></td>
                             <td><?php echo $row['StopIndex']; ?></td>
                             <td><?php echo $row['DepoId']; ?></td>
                             <td><?php echo $row['ArrivalTime']; ?></td>
                             <td><?php echo $row['DepatureTime']; ?></td>
-                            <td><a href="">Arrived </a></td>
+                            <td><a href="Edit/updateBusstatus.php?busid=<?php echo $row['BusId'];?>&atime=<?php echo $row['ArrivalTime'];?>&dtime=<?php echo $row['DepatureTime'];?>&depoID=<?php echo $row['DepoId'];?>">Arrived </a></td>
                         </tr>
                         <?php
                     }
