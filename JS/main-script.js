@@ -68,6 +68,16 @@ function showstaffAdmin(){
     document.getElementById('showstaff').style.backgroundColor= "#182C61";
 }
 
+function displayTime() {
+    let date = new Date();
+    let time = date.toLocaleTimeString();
+    document.getElementById("clock").textContent = time;
+}
+function showcurrentTime(){
+    setInterval(displayTime, 1000); // Update every 1 second
+}
+
+
 // document.getElementById('showbuses').onclick=showrouteAdmin;
 // document.getElementById('showbusschedule').onclick=showbusscheduleAdmin;
 // document.getElementById('showdepo').onclick=showdepoAdmin;

@@ -31,7 +31,7 @@ try {
                 "CREATE TABLE IF NOT EXISTS buses (
                         Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                         BusNumber VARCHAR(50) NOT NULL,
-                        BusType VARCHAR(50) NOT NULL,
+                        Type VARCHAR(50) NOT NULL,
                         FualType VARCHAR(20) NOT NULL,
                         TotalSeats INT NOT NULL,
                         EngineNo VARCHAR(100) NOT NULL,
@@ -92,33 +92,39 @@ try {
                         DepoName varchar(50) NOT NULL,
                         ArrivalTime TIME,
                         DepatureTime TIME,
-                        latetime TIME,
                         CONSTRAINT fk_rs_routeid FOREIGN KEY (TripId) REFERENCES busschedule(TripId),
                         CONSTRAINT fk_rs_depoid FOREIGN KEY (DepoId) REFERENCES depo(Id)
                     );",
+                "CREATE TABLE IF NOT EXISTS busstatus (
+                        busid INT NOT NULL,
+                        currentDepo INT NOT NULL,
+                        delaytime time NOT NULL,
+                        FOREIGN KEY (busid) REFERENCES buses(Id),
+                        FOREIGN KEY (currentDepo) REFERENCES depo(Id)
+                        );",
     );
     foreach ($querys as $query) {
         $pdo->exec($query);
     }
     echo "Database TO table created successfully" . "</br>";
-    $querys = array("INSERT INTO `buses` (`BusNumber`, `BusType`,`FualType`,`TotalSeats`, `EngineNo`, `InsuranceNo`)
+    $querys = array("INSERT INTO `buses` (`BusNumber`, `Type`,`FualType`,`TotalSeats`, `EngineNo`, `InsuranceNo`)
                     VALUES 
                         ('ABC123', 'Sleeper','Diesel', 40, '123456', 'INS123'),
                         ('DEF456', 'Seater','Electric', 30, '789012', 'INS456'),
-                        ('GHI789', 'Sleeper','Diesel', 40, '345678', 'INS789'),
-                        ('JKL012', 'Seater','Electric', 30, '901234', 'INS012'),
-                        ('MNO345', 'Sleeper','Diesel', 40, '567890', 'INS345'),
+                        ('GHI789', 'Sleeper','Diesel', 40, '345678', 'INS779'),
+                        ('JKL012', 'Seater','Electric', 30, '901234', 'INS011'),
+                        ('MNO345', 'Sleeper','Diesel', 40, '567890', 'INS347'),
                         ('PQR678', 'Seater','Electric', 30, '123789', 'INS678'),
                         ('STU901', 'Sleeper','Diesel', 40, '890123', 'INS901'),
                         ('VWX234', 'Seater','Diesel', 30, '456789', 'INS234'),
                         ('YZA567', 'Sleeper','Electric', 40, '012345', 'INS567'),
                         ('BCD890', 'Seater','Diesel', 30, '678901', 'INS890'),
-                        ('EFG123', 'Sleeper','Electric', 40, '234567', 'INS123'),
-                        ('HIJ456', 'Seater','Diesel', 30, '890123', 'INS456'),
+                        ('EFG123', 'Sleeper','Electric', 40, '234567', 'INS143'),
+                        ('HIJ456', 'Seater','Diesel', 30, '890123', 'INS444'),
                         ('KLM789', 'Sleeper','Electric', 40, '456789', 'INS789'),
                         ('NOP012', 'Seater','Diesel', 30, '012345', 'INS012'),
                         ('QRS345', 'Sleeper','Diesel', 40, '678901', 'INS345');",
-                    "INSERT INTO staff (Type, FirstName, MiddleName, LastName, DOB, JoiningDate, RetirementDate, Address1, Address2, City, State, PinCode, AddarCardNo, AddarCardURL, ProfilePhotoURL, LicenceNo, LicenceURL, WorkMobileNo, HomeMobileNo)
+                    "INSERT INTO staff (Type, FirstName, MiddleName, LastName, DOB, JoiningDate, RetirementDate, Address1, Address2, City, State, PinCode, AddarCardNo, AddarCardURL, ProfilePhotoURL, LicenceNo, LicenceURL, WorkMobileNo, SecondPhoneNo)
                     VALUES
                         ('driver', 'Amit', 'Kumar', 'Sharma', '1992-05-23', '2020-02-01', '2055-02-01', 'Sarkhej-Gandhinagar Highway', 'Opp. Rajpath Club', 'Ahmedabad', 'Gujarat', '380015', '111111111111', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ012015010123456', '../staffdata/Licence/licencePhoto.jpg', '9976543210', NULL),
                         ('conductor', 'Sneha', 'R', 'Patel', '1996-11-04', '2021-03-15', '2056-03-15', 'Near RTO Office', 'Fatehpura', 'Vadodara', 'Gujarat', '390006', '222222222222', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilePhoto/photo.jpg', 'GJ062017010123456', '../staffdata/Licence/licencePhoto.jpg', '9876543212', '9825678643'),
@@ -160,25 +166,25 @@ try {
                         ('conductor', 'Anaya', 'Desai', 'Mehta', '1998-02-22', '2019-07-15', '2045-07-15', 'B/2, Ravi Society', 'Behind Mall', 'Rajkot', 'Gujarat', '360001', '345677418012', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ031241235457893', '../staffdata/licence/licencephoto.jpg', '8776543212', NULL),
                         ('driver', 'Aryan', 'Shah', 'Patel', '1989-06-30', '2016-04-01', '2046-04-01', '12, Ashirwad Residency', 'Near Hospital', 'Ahmedabad', 'Gujarat', '380001', '456789012745', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ031241235457894', '../staffdata/licence/licencephoto.jpg', '9876548217', NULL),
                         ('conductor', 'Ishaan', 'Gandhi', 'Shah', '1993-11-11', '2017-12-31', '2042-12-31', '15, Vrindavan Flats', 'Beside Temple', 'Vadodara', 'Gujarat', '390001', '599890123456', '../staffdata/aadharcard/aadhar.jpg', '../staffdata/profilephoto/photo.jpg', 'GJ031241235457895', '../staffdata/licence/licencephoto.jpg', '9865543210', NULL);",
-                    "INSERT INTO depo (Name, NoOfPlatforms, Address1, Address2, City, State, PinCode, WorkPhoneNo, SecondPhoneNo)
+                    "INSERT INTO depo (DepoName, NoOfPlatforms, Address1, Address2, City, State, PinCode, WorkPhoneNo, SecondPhoneNo)
                     VALUES 
-                    ('Ahmedabad Bus Depot', 10, 'Gheekanta Road', 'Near Kalupur Railway Station', 'Ahmedabad', 'Gujarat', '380002', '9225461234', '9825462345'),
-                    ('Surat Bus Depot', 8, 'Ring Road', 'Near Udhna Darwaja', 'Surat', 'Gujarat', '395002', '9982546123', '9125546234'),
-                    ('Vadodara Bus Depot', 12, 'Genda Circle', 'Near Lal Baug', 'Vadodara', 'Gujarat', '390005', '9952546123', '9925546234'),
-                    ('Rajkot Bus Depot', 6, 'Gondal Road', 'Near Madhapar Chowkadi', 'Rajkot', 'Gujarat', '360006', '9105461223', NULL),
-                    ('Bhavnagar Bus Depot', 4, 'Station Road', 'Near Jubilee Circle', 'Bhavnagar', 'Gujarat', '364001', '9642546123', NULL),
-                    ('Gandhinagar Bus Depot', 3, 'Infocity Road', 'Near GH-5 Circle', 'Gandhinagar', 'Gujarat', '382009', '9125546123', '9652546234'),
-                    ('Jamnagar Bus Depot', 5, 'Bedi Road', 'Near Gokul Nagar', 'Jamnagar', 'Gujarat', '361008', '9825446123', '8726554234'),
-                    ('Junagadh Bus Depot', 2, 'Bilkha Road', 'Near Girnar Taleti', 'Junagadh', 'Gujarat', '362001', '8772546123', NULL),
-                    ('Mehsana Bus Depot', 7, 'Modhera Road', 'Near Ganpat University', 'Mehsana', 'Gujarat', '384002', '9822546612', '9322545462'),
-                    ('Bharuch Bus Depot', 4, 'NH-8', 'Near GNFC Township', 'Bharuch', 'Gujarat', '392015', '9852546125', NULL),
-                    ('Anand Bus Depot', 3, 'Near Sardar Patel Statue, V.V Nagar Road', 'Opp. HDFC Bank','Anand', 'Gujarat', '388001', '9876543216',NULL),
-                    ('Nadiad Bus Depot', 2, 'Near Mahagujarat Industrial Estate, Chaklashi Road', 'Opposite Vyas Vadi',' Nadiad', 'Gujarat', '387001', '9176543210',NULL),
+                    ('Ahmedabad Bus Depo', 10, 'Gheekanta Road', 'Near Kalupur Railway Station', 'Ahmedabad', 'Gujarat', '380002', '9225461234', '9825462345'),
+                    ('Surat Bus Depo', 8, 'Ring Road', 'Near Udhna Darwaja', 'Surat', 'Gujarat', '395002', '9982546123', '9125546234'),
+                    ('Vadodara Bus Depo', 12, 'Genda Circle', 'Near Lal Baug', 'Vadodara', 'Gujarat', '390005', '9952546123', '9925546234'),
+                    ('Rajkot Bus Depo', 6, 'Gondal Road', 'Near Madhapar Chowkadi', 'Rajkot', 'Gujarat', '360006', '9105461223', NULL),
+                    ('Bhavnagar Bus Depo', 4, 'Station Road', 'Near Jubilee Circle', 'Bhavnagar', 'Gujarat', '364001', '9642546123', NULL),
+                    ('Gandhinagar Bus Depo', 3, 'Infocity Road', 'Near GH-5 Circle', 'Gandhinagar', 'Gujarat', '382009', '9125546123', '9652546234'),
+                    ('Jamnagar Bus Depo', 5, 'Bedi Road', 'Near Gokul Nagar', 'Jamnagar', 'Gujarat', '361008', '9825446123', '8726554234'),
+                    ('Junagadh Bus Depo', 2, 'Bilkha Road', 'Near Girnar Taleti', 'Junagadh', 'Gujarat', '362001', '8772546123', NULL),
+                    ('Mehsana Bus Depo', 7, 'Modhera Road', 'Near Ganpat University', 'Mehsana', 'Gujarat', '384002', '9822546612', '9322545462'),
+                    ('Bharuch Bus Depo', 4, 'NH-8', 'Near GNFC Township', 'Bharuch', 'Gujarat', '392015', '9852546125', NULL),
+                    ('Anand Bus Depo', 3, 'Near Sardar Patel Statue, V.V Nagar Road', 'Opp. HDFC Bank','Anand', 'Gujarat', '388001', '9876543216',NULL),
+                    ('Nadiad Bus Depo', 2, 'Near Mahagujarat Industrial Estate, Chaklashi Road', 'Opposite Vyas Vadi',' Nadiad', 'Gujarat', '387001', '9176543210',NULL),
                     ('Ankleshwar', 4, 'Plot No. 12/13, GIDC, Near Shilpi Party Plot', 'Old NH 8', 'Ankleshwar', 'Gujarat', '393002', '9876543219',NULL),
                     ('Gondal', 5, 'Near Railway Station' , 'Gondal', 'Rajkot', 'Gujarat', '360311', '0123456789', '9876543212'),
                     ('Jetpur', 7, 'Opp. Bus Stand ','Jetpur', 'Rajkot', 'Gujarat', '360370', '1123456789', NULL),
                     ('Porbandar', 4, 'Shreeji Chambers','Near Ranjitnagar' , 'Porbandar', 'Gujarat', '360575', '0123456789', '9876543213'),
-                    ('Veraval', 6, 'Near ST Depot' ,'Veraval', 'Junagadh', 'Gujarat', '362265', '0123456789', '9876543210'),
+                    ('Veraval', 6, 'Near ST Depo' ,'Veraval', 'Junagadh', 'Gujarat', '362265', '0123456789', '9876543210'),
                     ('Navsari Bus Station', 4, 'Opp. S.T.Bus Station' , 'Station Road', 'Navsari', 'Gujarat', '396445', '02637115577', NULL),
                     ('Kheda', 4, 'Near Bus Stand' , 'Anand-Nadiad Rd', 'Kheda', 'Gujarat', '387411', '02694445562', '02694887766'),
                     ('Kapadvanj', 6, 'Near S.T. Bus Stand' , 'Kapadvanj - Kheda Rd', 'Kapadvanj', 'Gujarat', '387620', '02691789541', '02691741236'),
@@ -187,7 +193,7 @@ try {
                     ('Patan', 3, 'Near S.T. Bus Stand' , 'GIDC', 'Patan', 'Gujarat', '384265', '0276685954', NULL),
                     ('Siddhpur Depo', 3, 'Near S.T. Bus Stand' , 'Station Road', 'Siddhpur', 'Gujarat', '384151', '9876543217', NULL),
                     ('Unjha Depo', 4, 'Siddhpur Unjha Highway', 'Near Gokul Nagar', 'Unjha', 'Gujarat', '384170', '9876543218', '1234567890');",
-                    "INSERT INTO busschedule (TripId, Name, StartLocation, EndLocation,Distances,Price, DriverId, ConductorId, BusId) 
+                    "INSERT INTO busschedule (TripId, TripName, StartLocation, EndLocation,Distances,Price, DriverId, ConductorId, BusId) 
                     VALUES 
                         ('TRP001', 'Ahmedabad To Surat', 'Ahmedabad', 'Surat',278,417, 1, 2, 1),
                         ('TRP002', 'Vadodara To Rajkot', 'Vadodara', 'Rajkot',285,427, 3, 4, 2),
@@ -259,7 +265,7 @@ try {
                         ('DESRE001','Surendranagar', 'Depo','DEPO ADMIN','Surendranagar001'),
                         ('DEPAT001','Patan', 'Depo','DEPO ADMIN','Patan001'),
                         ('DESID001','Siddhpur', 'Depo','DEPO ADMIN','Siddhpur'),
-                        ('DEGON001','Unjha', 'Depo','DEPO ADMIN','Unjha001');",
+                        ('DEUNJ001','Unjha', 'Depo','DEPO ADMIN','Unjha001');",
                     "INSERT INTO `routestops` (`TripId`, `StopIndex`, `DepoId`, `ArrivalTime`, `DepatureTime`)
                     VALUES
                             ('TRP001',1,1,NULL,'08:00:00'),
@@ -324,6 +330,18 @@ try {
                             ('TRP008',5,24,'12:15:00','12:30:00'),
                             ('TRP008',6,25,'01:00:00','01:30:00'),
                             ('TRP008',7,9,'02:00:00',NULL);",
+                    "INSERT INTO busstatus (busid,currentDepo, delaytime)
+                    VALUES 
+                            (1,0, '00:00:00'),
+                            (2,0, '00:00:00'),
+                            (3,0, '00:00:00'),
+                            (4,0, '00:00:00'),
+                            (5,0, '00:00:00'),
+                            (6,0, '00:00:00'),
+                            (7,0, '00:00:00'),
+                            (8,0, '00:00:00'),
+                            (9,0, '00:00:00'),
+                            (10,0, '00:00:00');"
                         );
     foreach ($querys as $query) {
         $pdo->exec($query);

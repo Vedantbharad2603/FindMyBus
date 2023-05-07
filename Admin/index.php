@@ -12,9 +12,9 @@
             <h1>Login</h1>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <label for="id">ID:</label>
-                <input type="text" name="id" id="id" placeholder="Enter ID" value="MA113666" required>
+                <input type="text" name="id" id="id" placeholder="Enter ID" value="DEADB001" required>
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Enter your password" value="MA113666VEDANT" required>
+                <input type="password" name="password" id="password" placeholder="Enter your password" value="Ahmedabad001" required>
                 <input type="submit" value="Login">
             </form>
         </div>
@@ -33,13 +33,18 @@
                     if ($row['Roll']=='MAIN ADMIN') {
                         $_SESSION["SessUserID"]=$row["Id"];
                         $_SESSION["SessRoll"]='ADMIN';
+                        header("Location: ../Admin/adminHomepage.php");
                     }
                     elseif ($row['Roll']=='DEPO ADMIN') {
                         $_SESSION["SessUserID"]=$row["Id"];
                         $_SESSION["SessRoll"]='ADMIN';
+                        // $result = $pdo->query("SELECT FirstName from admin where Id=".$_SESSION['SessUserID']);
+                        $_SESSION["Sessdeponame"]=$row['FirstName'];
+                        // SELECT id from depo where DepoName like "Ahmedabad%%";
+                        header("Location: ../Admin/depoHomepage.php");
                     }
                     // header("Location: homepage.php");
-                    header("Location: ../Admin/adminHomepage.php");
+                    
                 } else {
                     header("Location: login.php");
                 }

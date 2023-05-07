@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>Add Bus Schedule</title>
-    <link rel="stylesheet" href="../CSS/main.css">
-    <script src="../JS/addStaff.js"></script>
+    <link rel="stylesheet" href="../../CSS/main.css">
+    <script src="../../JS/addStaff.js"></script>
   </head>
   <body>
 
