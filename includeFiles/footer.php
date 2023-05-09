@@ -1,6 +1,6 @@
 <head>
     <link rel="stylesheet" type="text/css" href="../CSS/main.css">
 </head>
-<footer>
-    <p>&copy; 2023 Bus Transport System. All rights reserved.</p>
+<footer class="Myfooter">
+    <p>&copy; 2023 Bus Transport System. Made By VEDANT BHARAD AND MEET BUTANI.</p>
 </footer>

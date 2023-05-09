@@ -12,9 +12,9 @@
             <h1>Login</h1>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <label for="id">ID:</label>
-                <input type="text" name="id" id="id" placeholder="Enter ID" value="DEADB001" required>
+                <input type="text" name="id" id="id" placeholder="Enter ID" value="MA113666" required>
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Enter your password" value="Ahmedabad001" required>
+                <input type="password" name="password" id="password" placeholder="Enter your password" value="MA113666VEDANT" required>
                 <input type="submit" value="Login">
             </form>
         </div>

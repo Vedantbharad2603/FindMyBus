@@ -1,8 +1,13 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #b2bec3;
+    /* font-family: Arial, sans-serif; */
+    /* background-color: #b2bec3; */
+    background-image: linear-gradient(rgba(83, 77, 77, 0.75),rgba(0,0,0,0.75)),url('../img/Background/bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    font-family: 'Roboto Mono', monospace;
 }
 
 .error {
@@ -17,7 +22,9 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
 }
-
+.container{
+    text-align: left;
+}
 h1 {
     text-align: center;
     font-size: 32px;
@@ -34,7 +41,7 @@ label {
     margin-bottom: 10px;
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="file"],input[type="date"]{
+input[type="text"], input[type="email"], input[type="password"], input[type="file"],input[type="date"],input[type="number"],select{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -72,7 +79,7 @@ input[type="submit"]:hover {
 }
 
 header {
-    background-color: #3B3B98;
+    background-color: #192a56;
     color: #fff;
     padding: 0px 25px 0px 25px;
     display: flex;
@@ -96,9 +103,16 @@ nav a {
     text-decoration: none;
 }
 
+nav a:hover{
+    color: #718093;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
 main {
     padding: 50px;
     text-align: center;
+    color: #dfe6e9;
 }
 
 h2 {
@@ -110,7 +124,7 @@ button {
     display: inline-block;
     width: 300px;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 16px;
     background-color: #3B3B98;
     color: #fff;
     text-decoration: none;
@@ -123,9 +137,14 @@ button:hover {
 }
 
 footer {
-    background-color: #ccc;
+    background-color: #718093;
     color: #333;
-    padding: 20px;
+    padding: 10px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /* color: white; */
     text-align: center;
 }
 .showdata{
@@ -135,12 +154,12 @@ footer {
 
 
 .searchdiv {
-    display: inline-flex;
-    width: 300px;
-    /* padding: 12px 20px; */
-    /* margin: 8px 0; */
-    /* border: 1px solid #ccc; */
-    /* border-radius: 4px; */
+    /* display: inline-flex; */
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 .adminTable{
     padding: 20px;

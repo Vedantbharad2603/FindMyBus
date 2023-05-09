@@ -44,36 +44,39 @@
             <!-- add all choice for search bus -->
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <div class="searchdiv">
-                    <input type="hidden" id="form" name="form" value="show_route" >
-                    <select name="pickupcity" id="pickupcity">
-                        <option value="">ANY</option>
+                    <!-- <input type="hidden" id="form" name="form" value="show_route" > -->
+                    <label for="pickupcity">Select Your Current Location</label>
+                    <select style="width: 15%;padding: 6px 10px;" name="pickupcity" id="pickupcity">
+                        <option value="">SELECT pickupcity</option>
                         <?php
-                            $qrysl="SELECT distinct StartLocation FROM busschedule ORDER BY StartLocation";
+                            $qrysl="SELECT distinct City FROM depo ORDER BY City";
                             $resultsl = $pdo->query($qrysl);
                             if($resultsl->rowCount()>0){
                                 while ($row = $resultsl->fetch()) {
                                     ?>
-                                    <option value="<?php echo $row["StartLocation"] ?>"  <?php if($row["StartLocation"]==$tmppickup) echo " SELECTED"; ?>  ><?php echo $row["StartLocation"] ?></option>
+                                    <option value="<?php echo $row["City"] ?>"  <?php if($row["City"]==$tmppickup) echo " SELECTED"; ?>  ><?php echo $row["City"] ?></option>
                                     <?php
                                 }
                             }
                         ?>
                     </select>
-                    <select name="dropcity" id="dropcity">
-                        <option value="">ANY</option>
+                    <label for="dropcity">Select Your Destination Location</label>
+                    <select style="width: 15%;padding: 6px 10px;" name="dropcity" id="dropcity">
+                        <option value="">SELECT dropcity</option>
                         <?php
-                            $qrysl="SELECT distinct EndLocation FROM busschedule ORDER BY EndLocation";
-                            $resultel = $pdo->query($qrysl);
-                            if($resultel->rowCount()>0){
-                                while ($row = $resultel->fetch()) {
+                            $qrysl="SELECT distinct City FROM depo ORDER BY City";
+                            $resultsl = $pdo->query($qrysl);
+                            if($resultsl->rowCount()>0){
+                                while ($row = $resultsl->fetch()) {
                                     ?>
-                                    <option value="<?php echo $row["EndLocation"] ?>" <?php if($row["EndLocation"]==$tmpdrop) echo " SELECTED"; ?> ><?php echo $row["EndLocation"] ?></option>
+                                    <option value="<?php echo $row["City"] ?>"  <?php if($row["City"]==$tmpdrop) echo " SELECTED"; ?>  ><?php echo $row["City"] ?></option>
                                     <?php
                                 }
                             }
                         ?>
                     </select>
-                    <select name="SeatType" id="SeatType">
+                    <label for="SeatType">Select Seat Type</label>
+                    <select style="width: 15%;padding: 6px 10px;" name="SeatType" id="SeatType">
                         <option value="">ANY</option>
                         <?php
                             $qrysl="SELECT distinct Type FROM buses WHERE Id in (SELECT BusId FROM busschedule)";
@@ -87,7 +90,8 @@
                             }
                         ?>
                     </select>
-                    <select name="Fual" id="Fual">
+                    <label for="Fual">Select Fual Type</label>
+                    <select style="width: 15%;padding: 6px 10px;" name="Fual" id="Fual">
                         <option value="">ANY</option>
                         <?php
                             $qrysl="SELECT distinct fualType FROM buses WHERE Id in (SELECT BusId FROM busschedule)";
@@ -106,42 +110,57 @@
             </form>
         </div>
         <!-- this div containes result Routes -->
-        <div class="showdata"  id="datatable" style="display: none;">
+        <div class="showdata adminTable"  id="datatable" style="display: none;">
             <h2>Routes</h2>
-            <table id="routTable" class="display">
+            <table id="routTable" style="color: black;" class="display">
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     require "../includeFiles/connections.php";
-                    $qry="SELECT *,(SELECT `Type` From Buses WHERE Id=busschedule.BusId ) as `seatType`,(SELECT `fualType` From Buses WHERE Id=busschedule.BusId ) as `fual` FROM busschedule WHERE 1=1 ";
-                    if(!empty($_POST["pickupcity"]))
-                    {
-                        $qry=$qry." AND StartLocation = '".$_POST["pickupcity"] ."' ";
+                    $qrySeatFual="";
+                    if((!empty($_POST["SeatType"])) && (!empty($_POST["Fual"]))){
+                        $qrySeatFual=" BusId IN(SELECT Id FROM buses WHERE `Type` ='".$_POST["SeatType"]."' AND FualType='".$_POST["Fual"]."') AND ";
                     }
-                    if(!empty($_POST["dropcity"]))
-                    {
-                        $qry=$qry." AND EndLocation = '".$_POST["dropcity"] ."'";
+                    if((!empty($_POST["SeatType"]))){
+                        $qrySeatFual=" BusId IN(SELECT Id FROM buses WHERE `Type` ='".$_POST["SeatType"]."') AND ";
                     }
-                    if(!empty($_POST["SeatType"]))
-                    {
-                        $qry = $qry." AND BusId in (SELECT Id FROM buses WHERE Type='". $tmptype ."')";
+                    if((!empty($_POST["Fual"]))){
+                        $qrySeatFual=" BusId IN(SELECT Id FROM buses WHERE FualType='".$_POST["Fual"]."') AND ";
                     }
-                    if(!empty($_POST["Fual"]))
+                    if((!empty($_POST["pickupcity"]) && (!empty($_POST["dropcity"]))))
                     {
-                        $qry = $qry." AND BusId in (SELECT Id FROM buses WHERE fualType='". $tmpfual ."')";
-                    }
-                    $result = $pdo->query($qry);
-                    if($result->rowCount()>0){
-                        echo " <thead> <tr><th>Name</th><th>ID</th><th>Start Location</th><th>End Location </th><th>Distances </th><th>Price(in ₹)</th><th>SeatType</th> <th>fualType</th></tr> </thead> <tbody>";
-                        while ($row = $result->fetch()) {
-                            echo "<tr><td>" . $row["TripName"] . "</td><td>" . $row["TripId"] . "</td><td>" . $row["StartLocation"] . "</td><td>" . $row["EndLocation"]."</td><td>" . $row["Distances"]."</td><td>" . $row["Price"] ."</td><td>" . $row["seatType"] ."</td><td>" . $row["fual"] ."</td></tr>";
+                        $qry=("SELECT Id FROM depo WHERE DepoName like '".$_POST["pickupcity"].'%'."'");
+                        $result = $pdo->query($qry);
+                        $startdepoId = $result->fetch();
+
+                        $qry=("SELECT Id FROM depo WHERE DepoName like '".$_POST["dropcity"].'%'."'");
+                        $result = $pdo->query($qry);
+                        $enddepoId = $result->fetch();
+
+                        $qry="SELECT *,buses.FualType,buses.Type
+                            FROM busschedule 
+                            inner join buses on busschedule.BusId = buses.Id
+                            WHERE ".$qrySeatFual."
+                            TripId IN 
+                            (SELECT distinct A.TripId
+                            FROM routestops A, routestops B
+                            WHERE A.TripId = B.TripId
+                            AND A.DepoId=$startdepoId[0] 
+                            AND B.DepoId=$enddepoId[0]
+                            AND A.StopIndex<B.StopIndex)";
+                        $result = $pdo->query($qry);
+                        if($result->rowCount()>0){
+                            echo " <thead> <tr><th>Name</th><th>ID</th><th>Start Location</th><th>End Location </th><th>Distances </th><th>Price(in ₹)</th><th>SeatType</th> <th>fualType</th></tr> </thead> <tbody>";
+                            while ($row = $result->fetch()) {
+                                echo "<tr><td>" . $row["TripName"] . "</td><td>" . $row["TripId"] . "</td><td>" . $row["StartLocation"] . "</td><td>" . $row["EndLocation"]."</td><td>" . $row["Distances"]."</td><td>" . $row["Price"] ."</td><td>" . $row["Type"] ."</td><td>" . $row["FualType"] ."</td></tr>";
+                            }
+                            echo "<tbody>";
+                            echo '<script>
+                                        showroute();
+                                    </script>';
+                        } 
+                        else {
+                            echo "No routes found.";
                         }
-                        echo "<tbody>";
-                        echo '<script>
-                                    showroute();
-                                </script>';
-                    } 
-                    else {
-                        echo "No routes found.";
                     }
                 }
                 ?>

@@ -43,8 +43,8 @@
                 <ul>
                 <li><a href="../Template/index.php">Home</a></li>
                 <li><a href="../Template/routes.php">Routes</a></li>
-                <li><a href="#">Tickets</a></li>
-                <li><a href="#">About Us</a></li>
+                <li><a href="../Template/findMyBus.php">Your Bus</a></li>
+                <li><a href="../Template/aboutUs.php">About Us</a></li>
                 </ul>
             </nav>
             <?php

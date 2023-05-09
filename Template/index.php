@@ -10,7 +10,7 @@
         <main>
         <h2>Welcome to Bus Transport System</h2>
         <p>Book your tickets now and enjoy the comfort and convenience of our bus transport system.</p>
-        <a href="#" class="button">Book Now</a>
+        <button onclick="location.href = 'bookTickets.php';"><a  class="button">Book Now</a></button>
         </main>
         <?php include '../includeFiles/footer.php'; ?>
     </body>

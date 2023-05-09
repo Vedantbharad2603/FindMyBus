@@ -23,7 +23,7 @@
             <br><br>
             <div id="busesDiv" class="adminTable" style="display: block">
             <a href="ADD/AddBus.php"><button>ADD New Data</button></a>
-            <table id="busestable" class="display">
+            <table id="busestable" style="color: black;" class="display">
             <?php
                 require "../includeFiles/connections.php";
                 $result = $pdo->query("SELECT * FROM buses");
@@ -52,7 +52,7 @@
             </div>
             <div id="busscheduleDiv" class="adminTable" style="display:none">
             <a href="ADD/AddBusSchedule.php"><button>ADD New Data</button></a>
-            <table id="busscheduletable" class="display">
+            <table id="busscheduletable" style="color: black;" class="display">
             <?php
                 require "../includeFiles/connections.php";
                 $result = $pdo->query("SELECT * FROM busschedule");
@@ -80,7 +80,7 @@
             </div>
             <div id="depoDiv" style="display:none" class="adminTable">
             <a href="ADD/AddDepo.php"><button>ADD New Data</button></a>
-            <table id="depotable" class="display">
+            <table id="depotable" style="color: black;" class="display">
             <?php
                 require "../includeFiles/connections.php";
                 $result = $pdo->query("SELECT * FROM depo");
@@ -109,12 +109,35 @@
                 }
             ?>
             </div>
-            <div id="routestopDiv" style="display:none" class="adminTable">
-            <h2>Working on that</h2>
+            <div id="routestopDiv"  style="display:none" class="adminTable">
+            <!-- <h2>Working on that</h2> -->
+            <a href="ADD/Addstaff.php"><button>ADD New Data</button></a>
+            <table id="routestopstable" style="color: black;" class="display">
+            <?php
+                require "../includeFiles/connections.php";
+                $result = $pdo->query("SELECT * FROM routestops");
+                if($result->rowCount()>0)
+                {
+                    echo "<thead> <tr><th>TripId</th> <th>StopIndex</th> <th>DepoId</th> <th>ArrivalTime</th> <th>DepatureTime</th> </tr> </thead> <tbody>";
+                    while($row = $result->fetch()){
+                        ?>
+                        <tr>
+                            <td><?php echo $row['TripId']; ?></td>
+                            <td><?php echo $row['StopIndex']; ?></td>
+                            <td><?php echo $row['DepoId']; ?></td>
+                            <td><?php echo $row['ArrivalTime']; ?></td>
+                            <td><?php echo $row['DepatureTime']; ?></td>
+                        </tr>
+                        <?php
+                    }
+                    echo "<tbody>";
+                    echo "</table>";
+                }
+            ?>
             </div>
             <div id="staffDiv" style="display:none;width: 117% !important;" class="adminTable">
             <a href="ADD/Addstaff.php"><button>ADD New Data</button></a>
-            <table id="stafftable" class="display">
+            <table id="stafftable" style="color: black;" class="display">
             <?php
                 require "../includeFiles/connections.php";
                 $result = $pdo->query("SELECT * FROM staff");
@@ -157,7 +180,7 @@
             $('#busscheduletable').DataTable();
             $('#depotable').DataTable();
             $('#stafftable').DataTable();
-            
+            $('#routestopstable').DataTable();
         } );
     </script>
     <!-- add main script -->

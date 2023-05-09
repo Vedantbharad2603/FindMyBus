@@ -17,7 +17,7 @@
         <main>
             <div id="busesDiv" class="adminTable" style="display: block">
             <p>The current time is: <span id="clock"></span></p>
-            <table id="busestable" class="display">
+            <table id="busestable" style="color: black;" class="display">
             <?php
                 require "../includeFiles/connections.php";
                 $deponame=$_SESSION["Sessdeponame"].'%';
